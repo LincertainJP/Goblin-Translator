@@ -50,14 +50,14 @@ public class TypeDeclaration implements Declaration, Instruction {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
-	/*	boolean result = this.type.completeResolve(_scope);
+		// throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
+		boolean result = this.type.completeResolve(_scope);
 		if (!(_scope.accepts(this))) {
 			Logger.error("Déclaration de type impossible : le nom " + this.getName() + " est déjà déclaré !");
 			return false;
 		}
 		_scope.register(this);
-		return result;*/
+		return result;
 	}
 	
 	@Override

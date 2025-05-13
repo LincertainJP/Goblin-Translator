@@ -1,0 +1,7 @@
+test_pointeur_et_tableau {
+	int v = 1;
+	int *ptr = &v;
+	int j = *ptr;
+	int t[] = new int[5];
+	int i = t[3];
+}

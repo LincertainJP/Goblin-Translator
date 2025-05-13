@@ -89,7 +89,7 @@ public class ConstantDeclaration implements Instruction, Declaration {
 			_scope.register(this);
 			return result;
 		} else {
-			Logger.error("la constante :\"" + this.name + "\" est déjà déclarée.");
+			Logger.error("La constante :\"" + this.name + "\" est déjà déclarée.");
 			return false;
 		}
 	}

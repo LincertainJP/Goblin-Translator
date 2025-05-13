@@ -9,8 +9,10 @@ import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.tam.ast.TAMInstruction;
 
 /**
  * Implementation of the Abstract Syntax Tree node for a printer instruction.
@@ -51,7 +53,7 @@ public class Printer implements Instruction {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in Printer.");
+		return this.parameter.completeResolve(_scope);
 	}
 
 	/* (non-Javadoc)
@@ -59,7 +61,7 @@ public class Printer implements Instruction {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException("Semantics checkType undefined in Printer.");
+		return true;
 	}
 
 	/* (non-Javadoc)
@@ -67,7 +69,7 @@ public class Printer implements Instruction {
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory undefined in Printer.");
+		return _offset;
 	}
 
 	/* (non-Javadoc)
@@ -75,7 +77,12 @@ public class Printer implements Instruction {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode undefined in Printer.");
+		Fragment fragPrint = _factory.createFragment();
+		
+		fragPrint.append(parameter.getCode(_factory));
+		fragPrint.add(Library.IOut );
+		
+		return fragPrint;
 	}
 
 }

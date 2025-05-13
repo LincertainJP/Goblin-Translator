@@ -54,7 +54,7 @@ public class PointerAllocation implements AccessibleExpression, AssignableExpres
 	 */
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException( "Semantics getType is undefined in PointerAllocation.");
+		return this.element;
 	}
 
 	/* (non-Javadoc)
