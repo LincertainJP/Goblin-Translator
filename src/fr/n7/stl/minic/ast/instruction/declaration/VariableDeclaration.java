@@ -144,16 +144,22 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 * @see fr.n7.stl.block.ast.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register, int)
 	 */
 	@Override
-	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in VariableDeclaration.");
+	public int allocateMemory(Register register, int offset) {
+		this.register = register;
+		this.offset = offset;		
+		return offset + this.getType().length();
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in VariableDeclaration.");
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragVDecl = factory.createFragment();
+		fragVDecl.add(factory.createPush(this.type.length()));
+		fragVDecl.append(value.getCode(factory));
+		fragVDecl.add(factory.createStore(register, offset, this.type.length()));
+		return fragVDecl;
 	}
 
 }

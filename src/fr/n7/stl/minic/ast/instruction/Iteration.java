@@ -9,6 +9,7 @@ import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -69,15 +70,20 @@ public class Iteration implements Instruction {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException( "Semantics checkType is undefined in Iteration.");
+		if (!(this.condition.getType().equalsTo(AtomicType.BooleanType))) {
+			Logger.error("La condition dans une boucle while doit être un booléen et pas un "+ this.condition.getType().toString());
+			return false;
+		}
+		return this.body.checkType();
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register, int)
 	 */
 	@Override
-	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException( "Semantics allocateMemory is undefined in Iteration.");
+	public int allocateMemory(Register register, int offset) {
+		this.body.allocateMemory(register, offset);
+		return offset;
 	}
 
 	/* (non-Javadoc)

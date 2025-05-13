@@ -50,7 +50,7 @@ public class ASTBuilder extends MiniCParserBaseListener {
                 
                 if (this.mainBlock.checkType()) {
                     System.out.println("Type verification succeeded.");
-                    /*
+                    
                     System.out.println("Code generation ...");
                     this.mainBlock.allocateMemory(Register.SB, 0);
                     try {
@@ -58,14 +58,13 @@ public class ASTBuilder extends MiniCParserBaseListener {
                         TAMFactory factory = new TAMFactoryImpl();
                         Fragment f = this.mainBlock.getCode(factory);
                         f.add(factory.createHalt());
-                        f.append(this.mainBlock.getFunctions(factory));
+//                        f.append(this.mainBlock.getFunctions(factory));
                         writer.println(f);
                         writer.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     System.out.println("Code generation finished");
-				*/
                 } else {
                     System.out.println("Type verification failed.");
                 }
@@ -160,6 +159,13 @@ public class ASTBuilder extends MiniCParserBaseListener {
     @Override
     public void exitInstructionSiSinon(InstructionSiSinonContext ctx) {
         ctx.i = new Conditional(ctx.expression().e, ctx.alors.b, ctx.sinon.b);
+    }
+    public void exitInstructionSi(MiniCParser.InstructionSiContext ctx) {
+    	ctx.i = new Conditional(ctx.expression().e, ctx.alors.b);
+    }
+
+    public void exitInstructionIteration(MiniCParser.InstructionIterationContext ctx) {
+    	ctx.i = new Conditional(ctx.expression().e, ctx.faire.b);
     }
 
     @Override

@@ -100,16 +100,31 @@ public class Conditional implements Instruction {
 	 * @see fr.n7.stl.block.ast.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register, int)
 	 */
 	@Override
-	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException( "Semantics allocateMemory is undefined in Conditional.");
+	public int allocateMemory(Register register, int offset) {
+		if (this.elseBranch == null) {
+			this.thenBranch.allocateMemory(register, offset);
+			return offset;
+		}
+		this.elseBranch.allocateMemory(register, offset);
+		this.thenBranch.allocateMemory(register, offset);
+		return offset;
+		
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
+	public Fragment getCode(TAMFactory factory) {
 		throw new SemanticsUndefinedException( "Semantics getCode is undefined in Conditional.");
+//		Fragment fragCond = factory.createFragment();
+//		fragCond.append(this.condition.getCode(factory));
+//		fragCond.add(factory.createJumpIf("if", 1));
+//		fragCond.append()
+//		if (!(this.elseBranch == null)) {
+//			
+//		}
+//		return fragCond;
 	}
 
 }

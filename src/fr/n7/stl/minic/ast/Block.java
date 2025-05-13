@@ -110,8 +110,11 @@ public class Block {
 	 * @param _register Inherited Register associated to the address of the variables.
 	 * @param _offset Inherited Current offset for the address of the variables.
 	 */	
-	public void allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in Block.");
+	public void allocateMemory(Register register, int offset) {
+		int dept = offset;
+		for (Instruction inst : this.instructions) {
+			dept = inst.allocateMemory(register, dept);
+		}
 	}
 
 	/**
@@ -120,8 +123,12 @@ public class Block {
 	 * @param _factory Inherited Factory to build AST nodes for TAM code.
 	 * @return Synthesized AST for the generated TAM code.
 	 */
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics generateCode is undefined in Block.");
+	public Fragment getCode(TAMFactory factory) {
+		Fragment frag = factory.createFragment();
+		for (Instruction inst : this.instructions) {
+			frag.append(inst.getCode(factory));
+		}
+		return frag;
 	}
 
 }

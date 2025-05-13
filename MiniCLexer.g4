@@ -5,6 +5,7 @@ package fr.n7.stl.minic.parser;
 }
 
 Egal: '=';
+TantQue: 'while';
 AccoladeOuvrante: '{';
 AccoladeFermante: '}';
 ParentheseOuvrante: '(';
