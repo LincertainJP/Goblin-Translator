@@ -1,3 +1,5 @@
 monProgramme {
-    print 2;
+	const int i0 = 1;
+
+    print i0;
 }

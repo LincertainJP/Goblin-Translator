@@ -15,6 +15,7 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
@@ -25,6 +26,7 @@ import fr.n7.stl.util.Logger;
  *
  */
 public class Conditional implements Instruction {
+
 
 	protected Expression condition;
 	protected Block thenBranch;
@@ -49,7 +51,7 @@ public class Conditional implements Instruction {
 	public String toString() {
 		return "if (" + this.condition + " )" + this.thenBranch + ((this.elseBranch != null)?(" else " + this.elseBranch):"");
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -116,15 +118,25 @@ public class Conditional implements Instruction {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in Conditional.");
-//		Fragment fragCond = factory.createFragment();
-//		fragCond.append(this.condition.getCode(factory));
-//		fragCond.add(factory.createJumpIf("if", 1));
-//		fragCond.append()
-//		if (!(this.elseBranch == null)) {
-//			
-//		}
-//		return fragCond;
+		int lNum = factory.createLabelNumber();
+		Fragment fragCond = factory.createFragment();
+
+		fragCond.append(this.condition.getCode(factory));
+		fragCond.add(factory.createJumpIf("if" + String.valueOf(lNum), 1));
+		
+		if (!(this.elseBranch == null)) {
+			fragCond.append(this.elseBranch.getCode(factory));
+		}
+		fragCond.add(factory.createJump("fi" + String.valueOf(lNum)));
+
+		Fragment fragIf = factory.createFragment();
+		fragIf.append(this.thenBranch.getCode(factory));
+		fragIf.addPrefix("if" + String.valueOf(lNum));
+		fragIf.addSuffix("fi" + String.valueOf(lNum));
+
+		fragCond.append(fragIf);
+
+		return fragCond;
 	}
 
 }
