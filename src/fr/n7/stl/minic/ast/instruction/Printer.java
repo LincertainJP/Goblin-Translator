@@ -21,8 +21,8 @@ public class Printer implements Instruction {
 
 	protected Expression parameter;
 
-	public Printer(Expression _value) {
-		this.parameter = _value;
+	public Printer(Expression value) {
+		this.parameter = value;
 	}
 
 	/* (non-Javadoc)

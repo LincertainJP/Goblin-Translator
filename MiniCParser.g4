@@ -42,6 +42,8 @@ instruction returns [Instruction i]:
     | affectable Egal valeur=expression PointVirgule #instructionAffectation
     | Afficher expression PointVirgule #instructionAffichage
     | Si ParentheseOuvrante expression ParentheseFermante alors=bloc Sinon sinon=bloc #instructionSiSinon
+    | Si ParentheseOuvrante expression ParentheseFermante alors=bloc #instructionSi
+    | TantQue ParentheseOuvrante expression ParentheseFermante faire=bloc #instructionIteration
     | Retour expression PointVirgule #instructionReturn
 ;
 
