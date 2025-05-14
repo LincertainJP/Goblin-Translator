@@ -1,0 +1,8 @@
+monProgramme {
+	boolean yes = true;
+	boolean no = false;
+	int a = yes?5:3;
+	int b = no?6:4;
+	print a;
+	print b;
+}

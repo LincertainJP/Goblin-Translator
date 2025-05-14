@@ -51,16 +51,16 @@ public class Assignment implements Instruction, Expression {
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		Declaration decl = _scope.get(this.assignable.toString());
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		Declaration decl = scope.get(this.assignable.toString());
 		boolean ok = true;
 		if (decl == null) {
-			ok = ok && this.assignable.collectAndPartialResolve(_scope);
+			ok = ok && this.assignable.collectAndPartialResolve(scope);
 		} else if (decl instanceof ConstantDeclaration) {
 			Logger.error ("Impossible d'assigner une nouvelle valeur à la constante :\"" + this.assignable.toString() + "\"");
 			return false;
 		}
-		return ok && (this.assignable.collectAndPartialResolve(_scope) && this.value.collectAndPartialResolve(_scope));
+		return ok && (this.assignable.collectAndPartialResolve(scope) && this.value.collectAndPartialResolve(scope));
 		
 	}
 	
@@ -73,8 +73,8 @@ public class Assignment implements Instruction, Expression {
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return this.collectAndPartialResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		return this.value.completeResolve(scope) && this.assignable.completeResolve(scope);
 	}
 
 	/* (non-Javadoc)
@@ -93,7 +93,8 @@ public class Assignment implements Instruction, Expression {
 		Type t_value = this.value.getType();
 		Type t_variable = this.assignable.getType();
 		if(!(t_variable.compatibleWith(t_value))) {
-			Logger.error("le type de " + this.assignable.toString() + "(" + t_variable.toString() + ") et le type de la valeur attribuée (" + t_value.toString() + ") ne sont pas compatibles.");
+			Logger.error("le type de " + this.assignable.toString() + "(" + t_variable.toString() 
+				+ ") et le type de la valeur attribuée (" + t_value.toString() + ") ne sont pas compatibles.");
 			return false;
 		}
 		return true;
@@ -111,8 +112,10 @@ public class Assignment implements Instruction, Expression {
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in Assignment.");
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragAss = factory.createFragment();
+		fragAss.append(this.value.getCode(factory));
+		fragAss.append(this.assignable.getCode(factory));
+		return fragAss;
 	}
-
 }

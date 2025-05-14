@@ -45,7 +45,7 @@ public class ASTBuilder extends MiniCParserBaseListener {
         SymbolTable tds = new SymbolTable();
         if (this.mainBlock.collectAndPartialResolve(tds)) {//if (this.mainBlock.collect(tds)) {
             System.out.println("collect succeeded");
-            if (this.mainBlock.collectAndPartialResolve(tds)) {//if (this.mainBlock.resolve(tds)) {
+            if (this.mainBlock.completeResolve(tds)) {//if (this.mainBlock.resolve(tds)) {
                 System.out.println("Resolve succeeded.");
                 
                 if (this.mainBlock.checkType()) {
@@ -165,7 +165,7 @@ public class ASTBuilder extends MiniCParserBaseListener {
     }
 
     public void exitInstructionIteration(MiniCParser.InstructionIterationContext ctx) {
-    	ctx.i = new Conditional(ctx.expression().e, ctx.faire.b);
+    	ctx.i = new Iteration(ctx.expression().e, ctx.faire.b);
     }
 
     @Override

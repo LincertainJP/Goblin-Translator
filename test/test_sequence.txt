@@ -1,0 +1,4 @@
+monProgramme {
+	<int, int> a = {1, 2};
+	print snd a;
+}

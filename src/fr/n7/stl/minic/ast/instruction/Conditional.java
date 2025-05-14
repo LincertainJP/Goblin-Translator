@@ -56,13 +56,13 @@ public class Conditional implements Instruction {
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		if (this.elseBranch != null) {
-			if (this.elseBranch.collectAndPartialResolve(_scope) == false) {
+			if (this.elseBranch.collectAndPartialResolve(scope) == false) {
 				return false;
 			}
 		}
-		return (this.thenBranch.collectAndPartialResolve(_scope) && this.condition.collectAndPartialResolve(_scope));
+		return (this.thenBranch.collectAndPartialResolve(scope) && this.condition.collectAndPartialResolve(scope));
 	}
 	
 	/* (non-Javadoc)
@@ -77,9 +77,14 @@ public class Conditional implements Instruction {
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return this.collectAndPartialResolve(_scope);
-	}
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		if (this.elseBranch != null) {
+			if (this.elseBranch.completeResolve(scope) == false) {
+				return false;
+			}
+		}
+		return (this.thenBranch.completeResolve(scope) && this.condition.completeResolve(scope));
+	}	
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#checkType()
@@ -118,21 +123,23 @@ public class Conditional implements Instruction {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		int lNum = factory.createLabelNumber();
+		String lNum = String.valueOf(factory.createLabelNumber());
 		Fragment fragCond = factory.createFragment();
 
 		fragCond.append(this.condition.getCode(factory));
-		fragCond.add(factory.createJumpIf("if" + String.valueOf(lNum), 1));
+		fragCond.add(factory.createJumpIf("if" + lNum, 1));
 		
 		if (!(this.elseBranch == null)) {
 			fragCond.append(this.elseBranch.getCode(factory));
 		}
-		fragCond.add(factory.createJump("fi" + String.valueOf(lNum)));
+		fragCond.add(factory.createJump("fi" + lNum));
 
 		Fragment fragIf = factory.createFragment();
+		// intruction inutile, just pour le cas ou le fragment de code de thenBranch est vide.
+		fragIf.add(factory.createPush(0));
 		fragIf.append(this.thenBranch.getCode(factory));
-		fragIf.addPrefix("if" + String.valueOf(lNum));
-		fragIf.addSuffix("fi" + String.valueOf(lNum));
+		fragIf.addPrefix("if" + lNum);
+		fragIf.addSuffix("fi" + lNum);
 
 		fragCond.append(fragIf);
 

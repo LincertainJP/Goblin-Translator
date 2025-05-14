@@ -30,6 +30,8 @@ public class Block {
 	 * Sequence of instructions contained in a block.
 	 */
 	protected List<Instruction> instructions;
+	
+	protected SymbolTable localTDS;
 
 	/**
 	 * Constructor for a block.
@@ -58,9 +60,10 @@ public class Block {
 	 * @return Synthesized Semantics attribute that indicates if the identifier declaration are
 	 * allowed.
 	 */
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		boolean ok = true;
-		SymbolTable symbTabBlock = new SymbolTable( _scope);
+		SymbolTable symbTabBlock = new SymbolTable(scope);
+		this.localTDS = symbTabBlock;
 		for (Instruction istr: this.instructions) {
 			ok = ok && istr.collectAndPartialResolve(symbTabBlock);
 		}
@@ -88,8 +91,12 @@ public class Block {
 	 * @return Synthesized Semantics attribute that indicates if the identifier used in the
 	 * block have been previously defined.
 	 */
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return this.collectAndPartialResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean ok = true;
+		for (Instruction istr: this.instructions) {
+			ok = ok && istr.completeResolve(this.localTDS );
+		}
+		return ok;
 	}
 
 	/**

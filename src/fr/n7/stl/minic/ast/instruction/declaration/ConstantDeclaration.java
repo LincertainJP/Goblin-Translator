@@ -103,8 +103,8 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return this.collectAndPartialResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		return this.type.completeResolve(scope) && this.value.completeResolve(scope);
 	}
 
 	/* (non-Javadoc)
@@ -114,7 +114,8 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	public boolean checkType() {
 		Type t_value = this.value.getType();
 		if(!(this.type.compatibleWith(t_value))) {
-			Logger.error("le type déclaré de la constante : " + this.name + "(" + this.type.toString() + ") et le type de la valeur attribuée (" + t_value.toString() + ") ne sont pas compatibles.");
+			Logger.error("le type déclaré de la constante : " + this.name + "(" + this.type.toString() 
+				+ ") et le type de la valeur attribuée (" + t_value.toString() + ") ne sont pas compatibles.");
 			return false;
 		}
 		return true;

@@ -1,0 +1,10 @@
+PUSH 2
+LOADL 1
+LOADL 2
+STORE (2) 0[SB]
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@27abe2cd
+LOAD (2) 0[SB]
+POP (1) 1
+SUBR IOut
+HALT
+

@@ -61,8 +61,13 @@ public class Iteration implements Instruction {
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return this.collectAndPartialResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean ok = this.condition.completeResolve(scope);
+		if (!ok) {
+			Logger.error("Erreur de Type: une condition doit être une variable booléenne.");
+			return false;
+		}
+		return this.body.completeResolve(scope);
 	}
 
 	/* (non-Javadoc)
@@ -90,8 +95,21 @@ public class Iteration implements Instruction {
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in Iteration.");
-	}
+	public Fragment getCode(TAMFactory factory) {
+		String lNum = String.valueOf(factory.createLabelNumber());
+		Fragment fragIter = factory.createFragment();
+
+		fragIter.append(this.condition.getCode(factory));
+		fragIter.add(factory.createJumpIf("finboucle" + lNum, 0));
+		fragIter.addPrefix("deboucle" + lNum);
+
+		Fragment fragBody = factory.createFragment();
+		fragBody.append(this.body.getCode(factory));
+		fragBody.add(factory.createJump("deboucle" + lNum));
+		fragBody.addSuffix("finboucle" + lNum);
+
+		fragIter.append(fragBody);
+
+		return fragIter;	}
 
 }

@@ -1,0 +1,9 @@
+monProgramme {
+	<int, int> a = <2,3>;
+	int b = fst a;
+	int c = snd a;
+	a = <4, 6>;
+	print a;
+	print b;
+	print c;
+}

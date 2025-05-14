@@ -1,0 +1,8 @@
+monProgramme {
+	tab = new int[4];
+	tab[1] = 1;
+	tab[2] = 2;
+	tab[3] = 3;
+	tab[4] = 4;
+
+}

@@ -49,15 +49,14 @@ public class TypeDeclaration implements Declaration, Instruction {
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		// throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
-		boolean result = this.type.completeResolve(_scope);
-		if (!(_scope.accepts(this))) {
+		if (!(scope.accepts(this))) {
 			Logger.error("Déclaration de type impossible : le nom " + this.getName() + " est déjà déclaré !");
 			return false;
 		}
-		_scope.register(this);
-		return result;
+		scope.register(this);
+		return true;
 	}
 	
 	@Override
@@ -70,8 +69,8 @@ public class TypeDeclaration implements Declaration, Instruction {
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return true;
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		return this.type.completeResolve(scope);
 	}
 
 	/**

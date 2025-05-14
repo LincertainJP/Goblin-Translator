@@ -33,6 +33,7 @@ class Driver {
                 ParseTree tree = parser.programme();
                 ParseTreeWalker walker = new ParseTreeWalker();
                 ASTBuilder astBuilder = new ASTBuilder(fname + ".tam");
+                System.out.println("Using input : " + fname + ".txt");
                 System.out.println("Using output : " + fname + ".tam");
                 walker.walk(astBuilder, tree);
                 if (errorListener.hasError()) {

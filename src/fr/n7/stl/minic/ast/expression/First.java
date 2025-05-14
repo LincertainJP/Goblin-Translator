@@ -7,9 +7,12 @@ import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.CoupleType;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.minic.ast.type.TypeErrorException;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 
 /**
  * Abstract Syntax Tree node for an expression extracting the first component in a couple.
@@ -42,16 +45,16 @@ public class First implements AccessibleExpression {
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics collect undefined in First.");
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		return this.target.collectAndPartialResolve(scope);
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics resolve undefined in First.");
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		return this.target.completeResolve(scope);
 	}
 	
 	/* (non-Javadoc)
@@ -59,15 +62,23 @@ public class First implements AccessibleExpression {
 	 */
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException("Semantics getType undefined in First.");
+		if (!(this.target.getType() instanceof CoupleType)) {
+			Logger.error("La cible d'un fst doit être un couple.");
+			throw new TypeErrorException(this.target.getType().toString() + " n'est pas un CoupleType.");
+		}
+		return ((CoupleType) this.target.getType()).getFirst();
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode undefined in First.");
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragFst = factory.createFragment();
+		int sizeSnd = ((CoupleType) this.target.getType()).getSecond().length();
+		fragFst.append(this.target.getCode(factory));
+		fragFst.add(factory.createPop(0, sizeSnd));
+		return fragFst;
 	}
 
 }

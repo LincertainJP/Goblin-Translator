@@ -1,0 +1,14 @@
+PUSH 1
+LOADL 0
+STORE (1) 0[SB]
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@2280cdac
+;(i + 2)
+LOAD (1) 0[SB]
+LOADL 2
+SUBR IAdd
+STORE (1) 0[SB]
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@4fccd51b
+LOAD (1) 0[SB]
+SUBR IOut
+HALT
+

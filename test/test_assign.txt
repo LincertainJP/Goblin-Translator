@@ -1,0 +1,11 @@
+monProgramme {
+	int a = 0;
+	int b = 2;
+	print a;
+	print b;
+	a = a + b;
+	b = b + 2;
+	print a;
+	print b;
+}
+

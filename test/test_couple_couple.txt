@@ -1,0 +1,8 @@
+monProgramme {
+	<<int, int> , int> a = <<4, 6>,3>;
+	<int, int> b = fst a;
+	int c = snd a;
+	print a;
+	print b;
+	print c;
+}

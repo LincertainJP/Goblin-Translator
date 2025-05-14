@@ -92,8 +92,11 @@ public class Sequence implements AccessibleExpression {
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode undefined in Sequence.");
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragSeq = factory.createFragment();
+		for (AccessibleExpression expr : this.values) {
+			fragSeq.append(expr.getCode(factory));		
+		}
+		return fragSeq;
 	}
-
 }

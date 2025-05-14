@@ -8,6 +8,7 @@ import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.Register;
@@ -44,16 +45,16 @@ public class Printer implements Instruction {
 	}
 	
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		return this.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		return this.collectAndPartialResolve(scope);
 	}
 	
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return this.parameter.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		return this.parameter.completeResolve(scope);
 	}
 
 	/* (non-Javadoc)
@@ -61,7 +62,8 @@ public class Printer implements Instruction {
 	 */
 	@Override
 	public boolean checkType() {
-		return true;
+		return true;//(this.parameter.getType().compatibleWith(AtomicType.BooleanType) 
+					//|| this.parameter.getType().compatibleWith(AtomicType.IntegerType) )
 	}
 
 	/* (non-Javadoc)
@@ -78,10 +80,10 @@ public class Printer implements Instruction {
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		Fragment fragPrint = _factory.createFragment();
-		
 		fragPrint.append(parameter.getCode(_factory));
-		fragPrint.add(Library.IOut );
-		
+		for (int i = 0; i < this.parameter.getType().length(); i++) {
+			fragPrint.add(Library.IOut);
+		}
 		return fragPrint;
 	}
 

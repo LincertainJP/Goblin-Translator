@@ -1,0 +1,13 @@
+PUSH 1
+LOADL 0
+STORE (1) 0[SB]
+deboucle1
+LOADL 1
+JUMPIF (0) finboucle1
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@1e802ef9
+LOAD (1) 0[SB]
+SUBR IOut
+JUMP deboucle1
+finboucle1
+HALT
+

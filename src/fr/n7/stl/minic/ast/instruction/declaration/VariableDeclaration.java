@@ -8,6 +8,7 @@ import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.NamedType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -123,8 +124,8 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in VariableDeclaration.");
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		return this.type.completeResolve(scope) && this.value.completeResolve(scope);
 	}
 
 	/* (non-Javadoc) (boolean getType.compatibleWith(Type t) )
@@ -133,8 +134,12 @@ public class VariableDeclaration implements Declaration, Instruction {
 	@Override
 	public boolean checkType() {
 		Type t_value = this.value.getType();
-		if(!(this.type.compatibleWith(t_value))) {
-			Logger.error("le type déclaré de la variable : " + this.name + "(" + this.type.toString() + ") et le type de la valeur attribuée (" + t_value.toString() + ") ne sont pas compatibles.");
+		if (t_value instanceof NamedType) {
+			t_value = ((NamedType) t_value).getType();
+		}
+		if(!(t_value.compatibleWith(this.type))) {
+			Logger.error("le type déclaré de la variable : " + this.name + "(" + this.type.toString() + ") "
+					+ "et le type de la valeur attribuée (" + t_value.toString() + ") ne sont pas compatibles.");
 			return false;
 		}
 		return true;
@@ -146,7 +151,7 @@ public class VariableDeclaration implements Declaration, Instruction {
 	@Override
 	public int allocateMemory(Register register, int offset) {
 		this.register = register;
-		this.offset = offset;		
+		this.offset = offset;
 		return offset + this.getType().length();
 	}
 

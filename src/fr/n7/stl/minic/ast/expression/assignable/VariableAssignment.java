@@ -34,11 +34,11 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 	 * @see fr.n7.stl.block.ast.expression.AbstractIdentifier#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		if (((HierarchicalScope<Declaration>)_scope).knows(this.name)) {
-			Declaration _declaration = _scope.get(this.name);
-			if (_declaration instanceof VariableDeclaration) {
-				this.declaration = ((VariableDeclaration) _declaration);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		if (((HierarchicalScope<Declaration>)scope).knows(this.name)) {
+			Declaration declaration = scope.get(this.name);
+			if (declaration instanceof VariableDeclaration) {
+				this.declaration = ((VariableDeclaration) declaration);
 				return true;
 			} else {
 				Logger.error("The declaration for " + this.name + " is of the wrong kind.");
@@ -54,8 +54,8 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 	 * @see fr.n7.stl.block.ast.expression.AbstractIdentifier#resolve(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return true;
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		return this.declaration.completeResolve(scope);
 	}
 	
 	/* (non-Javadoc)
@@ -70,8 +70,10 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 	 * @see fr.n7.stl.block.ast.impl.VariableUseImpl#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode undefined in VariableAssignment.");
+	public Fragment getCode(TAMFactory factory) {
+		VariableDeclaration decl = this.declaration;
+		Fragment fragVAss = factory.createFragment();
+		fragVAss.add(factory.createStore(decl.getRegister(), decl.getOffset(), decl.getType().length()));
+		return fragVAss;
 	}
-
 }

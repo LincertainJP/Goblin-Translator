@@ -1,0 +1,6 @@
+monProgramme {
+	typedef int entier;
+	entier i = 0;
+	i = i + 2;
+	print i;
+}

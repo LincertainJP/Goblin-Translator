@@ -79,8 +79,11 @@ public class Couple implements AccessibleExpression {
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in Couple.");
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragCouple = factory.createFragment();
+		fragCouple.append(this.first.getCode(factory));
+		fragCouple.append(this.second.getCode(factory));
+		return fragCouple;
 	}
 
 }

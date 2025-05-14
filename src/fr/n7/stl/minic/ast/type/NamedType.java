@@ -82,11 +82,11 @@ public class NamedType implements Type {
 	 * @return Type associated to the name.
 	 */
 	public Type getType() {
-		Type _result = this.declaration.getType();
-		if (_result instanceof NamedType) {
-			return ((NamedType) _result).getType();
+		Type result = this.declaration.getType();
+		if (result instanceof NamedType) {
+			return ((NamedType) result).getType();
 		} else {
-			return _result;
+			return result;
 		}
 	}
 
