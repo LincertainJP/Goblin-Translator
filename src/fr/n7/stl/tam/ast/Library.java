@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.tam.ast;
 
@@ -15,33 +15,33 @@ public enum Library implements TAMInstruction {
 	/**
 	 * Pops a Boolean value from the stack, and pushes its negation on the stack.
 	 */
-	BNeg, 
+	BNeg,
 	/**
 	 * Pops two Boolean values from the stack, and pushes their disjunction on the stack.
 	 */
-	BOr, 
+	BOr,
 	/**
 	 * Pops two Boolean values from the stack, and pushes their conjunction on the stack.
 	 */
-	BAnd, 
+	BAnd,
 	/**
 	 * Pops a Boolean value from the stack, and writes its value on the console.
 	 */
-	BOut, 
+	BOut,
 	/**
 	 * Reads a Boolean value from the console, and pushes it on the stack.
 	 */
-	BIn, 
+	BIn,
 	/**
-	 * Pops a Boolean value from the stack, converts it to a Character (true is 1, false is 0) 
+	 * Pops a Boolean value from the stack, converts it to a Character (true is 1, false is 0)
 	 * and pushes that one on the stack.
 	 */
-	B2C, 
+	B2C,
 	/**
 	 * Pops a Boolean value from the stack, converts it to an Integer (true is 1, false is 0)
 	 * and pushes that one on the stack.
 	 */
-	B2I, 
+	B2I,
 	/**
 	 * Pops a Boolean value from the stack, converts it to a String and pushes that one on the stack.
 	 */
@@ -49,19 +49,19 @@ public enum Library implements TAMInstruction {
 	/**
 	 * Pops a Character value from the stack, and writes its value on the console.
 	 */
-	COut, 
+	COut,
 	/**
 	 * Reads a Character value from the console, and pushes it on the stack.
 	 */
-	CIn, 
+	CIn,
 	/**
 	 * Pops a Character value from the stack, converts it to a Boolean and pushes that one on the stack.
 	 */
-	C2B, 
+	C2B,
 	/**
 	 * Pops a Character value from the stack, converts it to an Integer and pushes that one on the stack.
 	 */
-	C2I, 
+	C2I,
 	/**
 	 * Pops a Character value from the stack, converts it to a String and pushes that one on the stack.
 	 */
@@ -69,75 +69,75 @@ public enum Library implements TAMInstruction {
 	/**
 	 * Pops an Integer value from the stack, and pushes its opposite on the stack.
 	 */
-	INeg, 
+	INeg,
 	/**
 	 * Pops two Integer values from the stack, and pushes their sum on the stack.
 	 */
-	IAdd, 
+	IAdd,
 	/**
 	 * Pops two Integer values from the stack, and pushes their subtraction on the stack.
 	 */
-	ISub, 
+	ISub,
 	/**
 	 * Pops two Integer values from the stack, and pushes their product on the stack.
 	 */
-	IMul, 
+	IMul,
 	/**
 	 * Pops two Integer values from the stack, and pushes their quotient (Euclidean division) on the stack.
 	 */
-	IDiv, 
+	IDiv,
 	/**
 	 * Pops two Integer values from the stack, and pushes their rest (Euclidean division) on the stack.
 	 */
-	IMod, 
+	IMod,
 	/**
 	 * Pops two Integer values from the stack, compares them and pushes the true Boolean value
 	 * on the stack if they are equal and false if not.
 	 */
-	IEq, 
+	IEq,
 	/**
 	 * Pops two Integer values from the stack, compares them and pushes the true Boolean value
 	 * on the stack if they are different and false if not.
 	 */
-	INeq, 
+	INeq,
 	/**
 	 * Pops two Integer values from the stack, compares them and pushes the true Boolean value
 	 * on the stack if the first on is strictly lesser than the second one and false if not.
 	 */
-	ILss, 
+	ILss,
 	/**
 	 * Pops two Integer values from the stack, compares them and pushes the true Boolean value
 	 * on the stack if the first on is lesser or equal than the second one and false if not.
 	 */
-	ILeq, 
+	ILeq,
 	/**
 	 * Pops two Integer values from the stack, compares them and pushes the true Boolean value
 	 * on the stack if the first on is strictly greater than the second one and false if not.
 	 */
-	IGtr, 
+	IGtr,
 	/**
 	 * Pops two Integer values from the stack, compares them and pushes the true Boolean value
 	 * on the stack if the first on is greater or equal than the second one and false if not.
 	 */
-	IGeq, 
+	IGeq,
 	/**
 	 * Pops an Integer value from the stack, and writes its value on the console.
 	 */
-	IOut, 
+	IOut,
 	/**
 	 * Reads an Integer value from the console, and pushes it on the stack.
 	 */
-	IIn, 
+	IIn,
 	/**
-	 * Pops an Integer value from the stack, converts it to a Boolean (1 is true, 0 is false) 
+	 * Pops an Integer value from the stack, converts it to a Boolean (1 is true, 0 is false)
 	 * and pushes that one on the stack.
 	 */
-	I2B, 
+	I2B,
 	/**
-	 * Pops an Integer value from the stack, converts it to a Boolean (1 is true, 0 is false) 
+	 * Pops an Integer value from the stack, converts it to a Boolean (1 is true, 0 is false)
 	 * and pushes that one on the stack.
 	 */
-	I2C, 
+	I2C,
 	/**
 	 * Pops an Integer value from the stack, converts it to a String and pushes that one on the stack.
 	 */
@@ -145,98 +145,99 @@ public enum Library implements TAMInstruction {
 	/**
 	 * Pushes the void address on the stack.
 	 */
-	MVoid, 
+	MVoid,
 	/**
-	 * Pops an Integer value from the stack, allocates a memory chunk of that value size in the heap, 
+	 * Pops an Integer value from the stack, allocates a memory chunk of that value size in the heap,
 	 * and pushes its address on the stack.
 	 */
-	MAlloc, 
+	MAlloc,
 	/**
 	 * Pops an Integer value from the stack that must be an address in the heap and free the associated
 	 * memory chunk.
 	 */
-	MFree, 
+	MFree,
 	/**
-	 * Pops two Integer values from the stack that are addresses of memory chunks of the same size in the heap 
+	 * Pops two Integer values from the stack that are addresses of memory chunks of the same size in the heap
 	 * and one Integer value that is the size of these chunk, then it pushes on the stack a Boolean value that
 	 * is the result of the comparison of both chunks.
 	 */
-	MCompare, 
+	MCompare,
 	/**
-	 * Pops two Integer values from the stack that are addresses of memory chunks of the same size in the heap 
-	 * and one Integer value that is the size of these chunk, then it copies the content of the first chunk in 
+	 * Pops two Integer values from the stack that are addresses of memory chunks of the same size in the heap
+	 * and one Integer value that is the size of these chunk, then it copies the content of the first chunk in
 	 * the second chunk.
 	 */
 	MCopy,
 	/**
 	 * Allocation a String slot in the TAM virtual machine and pushes the slot number on the stack.
 	 */
-	SAlloc, 
+	SAlloc,
 	/**
-	 * Pops two Integer values from the stack that are String slots of the same size in the TAM virtual machine 
+	 * Pops two Integer values from the stack that are String slots of the same size in the TAM virtual machine
 	 * then it copies the content of the first String in the second one.
 	 */
-	SCopy, 
+	SCopy,
 	/**
 	 * Pops two Integer values from the stack that are String slots in the TAM virtual machine, then it allocates
-	 * a new String slot in the TAM virtual machine, copies the content of the two Strings in the new one and 
+	 * a new String slot in the TAM virtual machine, copies the content of the two Strings in the new one and
 	 * pushes the slot number of the new one on the stack.
 	 */
-	SConcat, 
+	SConcat,
 	/**
 	 * Pops a String value from the stack, and writes its value on the console.
 	 */
-	SOut, 
+	SOut,
 	/**
 	 * Reads a String value from the console, and pushes it on the stack.
 	 */
-	SIn, 
+	SIn,
 	/**
 	 * Pops an Integer value from the stack which is a String slot in the TAM virtual machine, converts the
 	 * content of that String to a Boolean and pushes that one on the stack.
 	 */
-	S2B, 
+	S2B,
 	/**
 	 * Pops an Integer value from the stack which is a String slot in the TAM virtual machine, converts the
 	 * content of that String to a Character and pushes that one on the stack.
 	 */
-	S2C, 
+	S2C,
 	/**
 	 * Pops an Integer value from the stack which is a String slot in the TAM virtual machine, converts the
 	 * content of that String to an Integer and pushes that one on the stack.
 	 */
 	S2I;
-	
+
 	/**
-	 * Each TAM instruction can have prefix comments used for relating this instruction 
+	 * Each TAM instruction can have prefix comments used for relating this instruction
 	 * to the block source code.
 	 */
 	protected List<String> comments;
-	
+
 	/**
-	 * Each TAM instruction can have prefix labels used for computing locations to that instruction 
+	 * Each TAM instruction can have prefix labels used for computing locations to that instruction
 	 * for JUMP and CALL instructions.
 	 */
 	protected List<String> prefixes;
-	
+
 	/**
-	 * Each TAM instruction can have suffix labels used for computing locations following that instruction 
+	 * Each TAM instruction can have suffix labels used for computing locations following that instruction
 	 * for JUMP and CALL instructions.
 	 */
 	protected List<String> suffixes;
-	
+
 	/**
 	 * Constructor that assigns an empty label for each enum value object.
 	 */
 	private Library() {
-		this.comments = new LinkedList<String>();
-		this.prefixes = new LinkedList<String>();
-		this.suffixes = new LinkedList<String>();
+		this.comments = new LinkedList<>();
+		this.prefixes = new LinkedList<>();
+		this.suffixes = new LinkedList<>();
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Enum#toString()
 	 */
+	@Override
 	public String toString() {
 		String _result = "";
 		for (String _comment : this.comments) {
@@ -251,13 +252,13 @@ public enum Library implements TAMInstruction {
 		}
 		return _result;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.tam.ast.TAMInstruction#addComment(java.lang.String)
 	 */
 	@Override
 	public void addComment(String _comment) {
-		this.comments.add(_comment);		
+		this.comments.add(_comment);
 	}
 
 	/* (non-Javadoc)
@@ -265,7 +266,7 @@ public enum Library implements TAMInstruction {
 	 */
 	@Override
 	public void addPrefix(String _label) {
-		this.prefixes.add(_label);		
+		this.prefixes.add(_label);
 	}
 
 	/* (non-Javadoc)
@@ -273,6 +274,6 @@ public enum Library implements TAMInstruction {
 	 */
 	@Override
 	public void addSuffix(String _label) {
-		this.suffixes.add(_label);				
+		this.suffixes.add(_label);
 	}
 }

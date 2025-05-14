@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.accessible;
 
@@ -9,7 +9,7 @@ package fr.n7.stl.minic.ast.expression.accessible;
  *
  */
 public enum BinaryOperator {
-	
+
 	/**
 	 * Numeric addition and String concatenation
 	 */
@@ -23,8 +23,8 @@ public enum BinaryOperator {
 	Greater,
 	Lesser,
 	And,
-	Or, 
-	LesserOrEqual, 
+	Or,
+	LesserOrEqual,
 	GreaterOrEqual;
 
 	@Override
@@ -43,7 +43,7 @@ public enum BinaryOperator {
 		case Multiply: return "*";
 		case Or: return "||";
 		case Substract: return "-";
-		default: throw new IllegalArgumentException( "The default case should never be triggered.");		
+		default: throw new IllegalArgumentException( "The default case should never be triggered.");
 		}
 	}
 }

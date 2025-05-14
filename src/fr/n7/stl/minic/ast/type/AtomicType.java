@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.type;
 
@@ -61,24 +61,24 @@ public enum AtomicType implements Type {
 			}
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Type#length()
 	 */
 	@Override
 	public int length() {
 		switch (this) {
-			case NullType : 
-			case BooleanType :
-			case CharacterType :
-			case FloatingType :
-			case IntegerType :
-			case StringType : return 1;
-			case VoidType : return 0;
-			default : throw new IllegalArgumentException( "Must not call length on the Error type.");
+		case NullType :
+		case BooleanType :
+		case CharacterType :
+		case FloatingType :
+		case IntegerType :
+		case StringType : return 1;
+		case VoidType : return 0;
+		default : throw new IllegalArgumentException( "Must not call length on the Error type.");
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Enum#toString()
 	 */

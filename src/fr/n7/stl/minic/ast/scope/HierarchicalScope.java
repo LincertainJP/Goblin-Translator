@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.scope;
 
@@ -9,7 +9,7 @@ package fr.n7.stl.minic.ast.scope;
  *
  */
 public interface HierarchicalScope <D extends Declaration> extends Scope<D> {
-	
+
 	/**
 	 * Check if an element is registered (known) in the whole hierarchical scope.
 	 * @param _name : Name of the element looked for in the whole hierarchical scope.

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.type;
 
@@ -13,7 +13,7 @@ import fr.n7.stl.minic.ast.scope.HierarchicalScope;
  *
  */
 public interface Type {
-	
+
 	/**
 	 * Check if two types are equals.
 	 * This must be an equivalence relation.
@@ -21,9 +21,9 @@ public interface Type {
 	 * @return True if the type is equals with the type _other, False otherwise.
 	 */
 	public boolean equalsTo(Type _other);
-	
+
 	/**
-	 * Check if two types are compatibles. A subtype is compatibleWith a supertype, 
+	 * Check if two types are compatibles. A subtype is compatibleWith a supertype,
 	 * but a supertype is not compatible with a subtype.
 	 * This must be a partial order relation.
 	 * Check that the self type is compatible with the _other type, i.e. all values of self can be
@@ -32,7 +32,7 @@ public interface Type {
 	 * @return True if the types are compatibles, False otherwise.
 	 */
 	public boolean compatibleWith(Type _other);
-	
+
 	/**
 	 * Builds a new type that results from the merging of self and _other according to the compatibleWith relation.
 	 * Compute the least common type (least upper bound) of two types according to the compatibleWith relation.
@@ -41,7 +41,7 @@ public interface Type {
 	 * @return A type that is the least upper bound of self and _other according to compatibleWith.
 	 */
 	public Type merge(Type _other);
-	
+
 	/**
 	 * Compute the size in TAM words needed to store a value of the _self type.
 	 * @return Number of TAM words needed to store a value of the _self type.
@@ -57,5 +57,5 @@ public interface Type {
 
 	 */
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope);
-	
+
 }

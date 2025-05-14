@@ -1,9 +1,8 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
@@ -33,14 +32,15 @@ public class First implements AccessibleExpression {
 	public First(AccessibleExpression _target) {
 		this.target = _target;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString() {
 		return "(fst" + this.target + ")";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
@@ -56,7 +56,7 @@ public class First implements AccessibleExpression {
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 		return this.target.completeResolve(scope);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.assignable;
 
@@ -23,7 +23,7 @@ public class FieldAssignment extends AbstractField<AssignableExpression> impleme
 	public FieldAssignment(AssignableExpression _record, String _name) {
 		super(_record, _name);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.impl.FieldAccessImpl#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
@@ -31,5 +31,5 @@ public class FieldAssignment extends AbstractField<AssignableExpression> impleme
 	public Fragment getCode(TAMFactory _factory) {
 		throw new SemanticsUndefinedException("Semantics getCode undefined in FieldAssignment.");
 	}
-	
+
 }

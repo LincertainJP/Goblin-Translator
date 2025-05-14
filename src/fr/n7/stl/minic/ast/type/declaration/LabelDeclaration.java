@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.type.declaration;
 
@@ -27,7 +27,7 @@ public class LabelDeclaration implements Declaration {
 	public String getName() {
 		return this.name;
 	}
-	
+
 	@Override
 	public Type getType() {
 		return AtomicType.VoidType; // TODO : Should be the type of the enum containing the label...

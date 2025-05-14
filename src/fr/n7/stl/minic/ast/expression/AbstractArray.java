@@ -1,6 +1,5 @@
 package fr.n7.stl.minic.ast.expression;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
@@ -18,12 +17,12 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	 * AST node that represents the expression whose result is an array.
 	 */
 	protected ArrayKind array;
-	
+
 	/**
 	 * AST node that represents the expression whose result is an integer value used to index the array.
 	 */
 	protected AccessibleExpression index;
-	
+
 	/**
 	 * Construction for the implementation of an array element access expression Abstract Syntax Tree node.
 	 * @param _array Abstract Syntax Tree for the array part in an array element access expression.
@@ -41,7 +40,7 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	public String toString() {
 		return (this.array + "[ " + this.index + " ]");
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
@@ -57,13 +56,14 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 		return this.array.completeResolve(scope) && this.index.completeResolve(scope);
 	}
-	
+
 	/**
 	 * Synthesized Semantics attribute to compute the type of an expression.
 	 * @return Synthesized Type of the expression.
 	 */
+	@Override
 	public Type getType() {
-		return new ArrayType();
+		return this.array.getType();
 	}
 
 }

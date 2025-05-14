@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.type;
 
@@ -31,7 +31,7 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 */
 	public RecordType(String _name, Iterable<FieldDeclaration> _fields) {
 		this.name = _name;
-		this.fields = new LinkedList<FieldDeclaration>();
+		this.fields = new LinkedList<>();
 		for (FieldDeclaration _field : _fields) {
 			this.fields.add(_field);
 		}
@@ -43,7 +43,7 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 */
 	public RecordType(String _name) {
 		this.name = _name;
-		this.fields = new LinkedList<FieldDeclaration>();
+		this.fields = new LinkedList<>();
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 			this.fields.add(_field);
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Type#equalsTo(fr.n7.stl.block.ast.Type)
 	 */
@@ -139,7 +139,7 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 			throw new IllegalArgumentException();
 		}
 	}
-	
+
 	/**
 	 * Build a sequence type by erasing the names of the fields.
 	 * @return Sequence type extracted from record fields.
@@ -179,7 +179,7 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 		}
 		return _result + "}";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */

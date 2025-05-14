@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.tam.ast.impl;
 
@@ -20,12 +20,12 @@ public class FragmentImpl implements Fragment {
 	 * The sequence of TAM Instruction in the Fragment.
 	 */
 	private List<TAMInstruction> instructions;
-	
+
 	/**
 	 * Create an empty fragment.
 	 */
 	public FragmentImpl() {
-		this.instructions = new LinkedList<TAMInstruction>();
+		this.instructions = new LinkedList<>();
 	}
 
 	/* (non-Javadoc)
@@ -43,7 +43,7 @@ public class FragmentImpl implements Fragment {
 	public void append(Fragment _fragment) {
 		this.instructions.addAll(((FragmentImpl)_fragment).instructions);
 	}
-	
+
 	@Override
 	public String toString() {
 		String _result = "";
@@ -52,9 +52,10 @@ public class FragmentImpl implements Fragment {
 		}
 		return _result;
 	}
-	
+
+	@Override
 	public void addComment(String _comment) {
-		if (this.instructions.size() > 0) { 
+		if (this.instructions.size() > 0) {
 			this.instructions.get(0).addComment(_comment);
 		} else {
 			throw new IllegalArgumentException( "Fragment size is 0. No comment can be added.");
@@ -63,16 +64,16 @@ public class FragmentImpl implements Fragment {
 
 	@Override
 	public void addPrefix(String _label) {
-		if (this.instructions.size() > 0) { 
+		if (this.instructions.size() > 0) {
 			this.instructions.get(0).addPrefix(_label);
 		} else {
 			throw new IllegalArgumentException( "Fragment size is 0. No prefix label can be added.");
 		}
 	}
-	
+
 	@Override
 	public void addSuffix(String _label) {
-		if (this.instructions.size() > 0) { 
+		if (this.instructions.size() > 0) {
 			this.instructions.get(this.instructions.size()-1).addSuffix(_label);
 		} else {
 			throw new IllegalArgumentException( "Fragment size is 0. No suffix label can be added.");

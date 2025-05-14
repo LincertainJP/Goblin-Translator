@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.instruction.declaration;
 
@@ -11,17 +11,17 @@ import fr.n7.stl.minic.ast.type.Type;
  * @author Marc Pantel
  */
 public class ParameterDeclaration implements Declaration {
-	
+
 	/**
 	 * Name of the formal parameter
 	 */
 	protected String name;
-	
+
 	/**
 	 * AST node for the type of the formal parameter
 	 */
 	protected Type type;
-	
+
 	/**
 	 * Offset of the formal parameter in the list of parameters for the function
 	 * i.e. the size of the memory allocated to the previous parameters
@@ -59,6 +59,7 @@ public class ParameterDeclaration implements Declaration {
 	 * Provide the type of the formal parameter in the list of formal parameters for the function
 	 * @return Type of the formal parameter
 	 */
+	@Override
 	public Type getType() {
 		return this.type;
 	}

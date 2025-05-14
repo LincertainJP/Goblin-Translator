@@ -4,5 +4,6 @@ monProgramme {
 	tab[2] = 2;
 	tab[3] = 3;
 	tab[4] = 4;
+	print tab[1];
 
 }

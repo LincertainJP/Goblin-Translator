@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.scope;
 
@@ -13,16 +13,16 @@ import java.util.Map.Entry;
  *
  */
 public class SymbolTable implements HierarchicalScope<Declaration> {
-	
+
 	private Map<String, Declaration> declarations;
 	private Scope<Declaration> context;
 
 	public SymbolTable() {
 		this( null );
 	}
-	
+
 	public SymbolTable(Scope<Declaration> _context) {
-		this.declarations = new HashMap<String,Declaration>();
+		this.declarations = new HashMap<>();
 		this.context = _context;
 	}
 
@@ -89,7 +89,7 @@ public class SymbolTable implements HierarchicalScope<Declaration> {
 			}
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

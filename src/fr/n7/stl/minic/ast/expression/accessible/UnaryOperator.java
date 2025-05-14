@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.accessible;
 
@@ -8,7 +8,7 @@ package fr.n7.stl.minic.ast.expression.accessible;
  *
  */
 public enum UnaryOperator {
-	
+
 	/**
 	 * Boolean negation
 	 */
@@ -23,7 +23,7 @@ public enum UnaryOperator {
 		switch (this) {
 		case Negate: return "!";
 		case Opposite: return "-";
-		default: throw new IllegalArgumentException( "The default case should never be triggered.");		
+		default: throw new IllegalArgumentException( "The default case should never be triggered.");
 		}
 	}
 

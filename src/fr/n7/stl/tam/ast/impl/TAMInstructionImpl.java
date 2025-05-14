@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.tam.ast.impl;
 
@@ -21,25 +21,25 @@ class TAMInstructionImpl implements TAMInstruction {
 	 * Each TAM instruction has a unique kind, i.e. the name of the instruction.
 	 */
 	private TAMInstructionKind kind;
-	
+
 	/**
-	 * Each TAM instruction can have prefix comments used for relating this instruction 
+	 * Each TAM instruction can have prefix comments used for relating this instruction
 	 * to the block source code.
 	 */
 	protected List<String> comments;
-	
+
 	/**
-	 * Each TAM instruction can have prefix labels used for computing locations to that instruction 
+	 * Each TAM instruction can have prefix labels used for computing locations to that instruction
 	 * for JUMP and CALL instructions.
 	 */
 	protected List<String> prefixes;
-	
+
 	/**
-	 * Each TAM instruction can have suffix labels used for computing locations following that instruction 
+	 * Each TAM instruction can have suffix labels used for computing locations following that instruction
 	 * for JUMP and CALL instructions.
 	 */
 	protected List<String> suffixes;
-	
+
 	/**
 	 * Some TAM instructions manipulate explicitly the memory (LOAD and STORE instructions).
 	 * This is the register of the manipulated memory.
@@ -56,7 +56,7 @@ class TAMInstructionImpl implements TAMInstruction {
 	 * Some TAM instructions use labels that are resolved by the TAM assembler tool (JUMP,
 	 * JUMPIF, CALL).
 	 * This is the target label for these instructions.
-	 */	
+	 */
 	protected Optional<String> target;
 
 	/**
@@ -72,7 +72,7 @@ class TAMInstructionImpl implements TAMInstruction {
 	 * It is stored in the size bitfield in the instructions.
 	 */
 	private Optional<Register> frame;
-	
+
 	/**
 	 * Construction for a full TAM instruction with kind, label, location and size.
 	 * @param _kind Kind for the TAM instruction.
@@ -83,13 +83,13 @@ class TAMInstructionImpl implements TAMInstruction {
 	 * @param _size Optional Integer size for the TAM instruction.
 	 * @param _frame Optional Register frame for the TAM instruction.
 	 */
-	public TAMInstructionImpl(TAMInstructionKind _kind, Optional<String> _label, 
-			Optional<Register> _register, Optional<Integer> _offset, 
+	public TAMInstructionImpl(TAMInstructionKind _kind, Optional<String> _label,
+			Optional<Register> _register, Optional<Integer> _offset,
 			Optional<String> _target, Optional<Integer> _size, Optional<Register> _frame) {
 		this.kind = _kind;
-		this.comments = new LinkedList<String>();
-		this.prefixes = new LinkedList<String>();
-		this.suffixes = new LinkedList<String>();
+		this.comments = new LinkedList<>();
+		this.prefixes = new LinkedList<>();
+		this.suffixes = new LinkedList<>();
 		if (_label.isPresent()) {
 			this.prefixes.add(_label.get());
 		}
@@ -99,7 +99,7 @@ class TAMInstructionImpl implements TAMInstruction {
 		this.size = _size;
 		this.frame = _frame;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.tam.ast.TAMInstruction#addPrefix(fr.n7.stl.tam.ast.Label)
 	 */
@@ -107,7 +107,7 @@ class TAMInstructionImpl implements TAMInstruction {
 	public void addPrefix(String _label) {
 		this.prefixes.add(_label);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.tam.ast.TAMInstruction#addSuffix(fr.n7.stl.tam.ast.Label)
 	 */
@@ -115,15 +115,16 @@ class TAMInstructionImpl implements TAMInstruction {
 	public void addSuffix(String _label) {
 		this.suffixes.add(_label);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.tam.ast.TAMInstruction#addComment(java.lang.String)
 	 */
 	@Override
 	public void addComment(String _comment) {
-		this.comments.add(_comment);		
+		this.comments.add(_comment);
 	}
-	
+
+	@Override
 	public String toString() {
 		String _result = "";
 		for (String _comment : this.comments) {

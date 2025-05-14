@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.instruction.declaration;
 
@@ -26,28 +26,28 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 * Name of the declared variable.
 	 */
 	protected String name;
-	
+
 	/**
 	 * AST node for the type of the declared variable.
 	 */
 	protected Type type;
-	
+
 	/**
 	 * AST node for the initial value of the declared variable.
 	 */
 	protected Expression value;
-	
+
 	/**
 	 * Address register that contains the base address used to store the declared variable.
 	 */
 	protected Register register;
-	
+
 	/**
 	 * Offset from the base address used to store the declared variable
 	 * i.e. the size of the memory allocated to the previous declared variables
 	 */
 	protected int offset;
-	
+
 	/**
 	 * Creates a variable declaration instruction node for the Abstract Syntax Tree.
 	 * @param _name Name of the declared variable.
@@ -72,6 +72,7 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 * Synthesized semantics attribute for the type of the declared variable.
 	 * @return Type of the declared variable.
 	 */
+	@Override
 	public Type getType() {
 		return this.type;
 	}
@@ -91,7 +92,7 @@ public class VariableDeclaration implements Declaration, Instruction {
 	public Register getRegister() {
 		return this.register;
 	}
-	
+
 	/**
 	 * Synthesized semantics attribute for the offset used to compute the address of the variable.
 	 * @return Offset used to compute the address where the declared variable will be stored.
@@ -99,22 +100,22 @@ public class VariableDeclaration implements Declaration, Instruction {
 	public int getOffset() {
 		return this.offset;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		boolean result = this.value.collectAndPartialResolve(_scope);
-		if (_scope.accepts(this)) {
-			_scope.register(this);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		boolean result = this.value.collectAndPartialResolve(scope);
+		if (scope.accepts(this)) {
+			scope.register(this);
 			return result;
 		} else {
 			Logger.error("la variable :\"" + this.name + "\" est déjà déclarée.");
 			return false;
 		}
 	}
-	
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.accessible;
 
@@ -12,10 +12,10 @@ import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 
 /**
-* Implementation of the Abstract Syntax Tree node for accessing an expression address.
-* @author Marc Pantel
-*
-*/
+ * Implementation of the Abstract Syntax Tree node for accessing an expression address.
+ * @author Marc Pantel
+ *
+ */
 public class AddressAccess implements AccessibleExpression {
 
 	protected AssignableExpression assignable;
@@ -23,18 +23,18 @@ public class AddressAccess implements AccessibleExpression {
 	public AddressAccess(AssignableExpression _assignable) {
 		this.assignable = _assignable;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "& " + this.assignable.toString();
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "collect is undefined in AddressAccess.");	
+		throw new SemanticsUndefinedException( "collect is undefined in AddressAccess.");
 	}
 
 	/* (non-Javadoc)
@@ -42,9 +42,9 @@ public class AddressAccess implements AccessibleExpression {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "resolve is undefined in AddressAccess.");	
+		throw new SemanticsUndefinedException( "resolve is undefined in AddressAccess.");
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */
@@ -52,7 +52,7 @@ public class AddressAccess implements AccessibleExpression {
 	public Type getType() {
 		throw new SemanticsUndefinedException( "getType is undefined in AddressAccess.");
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */

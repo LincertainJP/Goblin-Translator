@@ -1,10 +1,9 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.allocation;
 
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
-import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -24,15 +23,15 @@ public class PointerAllocation implements AccessibleExpression, AssignableExpres
 	public PointerAllocation(Type _element) {
 		this.element = _element;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "new " + this.element; 
+		return "new " + this.element;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */

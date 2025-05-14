@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.accessible;
 
@@ -20,7 +20,7 @@ public class UnaryExpression implements AccessibleExpression {
 
 	private UnaryOperator operator;
 	private AccessibleExpression parameter;
-	
+
 	/**
 	 * Builds a unary expression Abstract Syntax Tree node from the parameter sub-expression
 	 * and the unary operation.
@@ -39,7 +39,7 @@ public class UnaryExpression implements AccessibleExpression {
 	public String toString() {
 		return "(" + this.operator + " " + this.parameter + ")";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -55,7 +55,7 @@ public class UnaryExpression implements AccessibleExpression {
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		return this.parameter.completeResolve(_scope);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */
@@ -66,23 +66,23 @@ public class UnaryExpression implements AccessibleExpression {
 			return resultType;
 		} else {
 			switch (this.operator) {
-				case Negate: {
-					if (resultType.compatibleWith(AtomicType.BooleanType))  {
-						return resultType;
-					} else {
-						Logger.warning("Type error in unary expression : Negate parameter " + resultType);
-						return AtomicType.ErrorType;
-					}
+			case Negate: {
+				if (resultType.compatibleWith(AtomicType.BooleanType))  {
+					return resultType;
+				} else {
+					Logger.warning("Type error in unary expression : Negate parameter " + resultType);
+					return AtomicType.ErrorType;
 				}
-				case Opposite: {
-					if (resultType.compatibleWith(AtomicType.FloatingType)) {
-						return resultType;
-					} else {
-						Logger.warning("Type error in unary expression : Opposite parameter " + resultType);
-						return AtomicType.ErrorType;
-					}
+			}
+			case Opposite: {
+				if (resultType.compatibleWith(AtomicType.FloatingType)) {
+					return resultType;
+				} else {
+					Logger.warning("Type error in unary expression : Opposite parameter " + resultType);
+					return AtomicType.ErrorType;
 				}
-				default : return AtomicType.ErrorType;
+			}
+			default : return AtomicType.ErrorType;
 			}
 		}
 	}

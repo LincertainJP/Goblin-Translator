@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression;
 
@@ -27,18 +27,18 @@ public class FunctionCall implements AccessibleExpression {
 	 * TODO : Should be an expression.
 	 */
 	protected String name;
-	
+
 	/**
 	 * Declaration of the called function after name resolution.
 	 * TODO : Should rely on the VariableUse class.
 	 */
 	protected FunctionDeclaration function;
-	
+
 	/**
 	 * List of AST nodes that computes the values of the parameters for the function call.
 	 */
 	protected List<AccessibleExpression> arguments;
-	
+
 	/**
 	 * @param _name : Name of the called function.
 	 * @param _arguments : List of AST nodes that computes the values of the parameters for the function call.
@@ -64,7 +64,7 @@ public class FunctionCall implements AccessibleExpression {
 		}
 		return  _result + ")";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
@@ -80,7 +80,7 @@ public class FunctionCall implements AccessibleExpression {
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		throw new SemanticsUndefinedException( "Semantics resolve is undefined in FunctionCall.");
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */

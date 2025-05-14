@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.accessible;
 
@@ -14,9 +14,9 @@ import fr.n7.stl.tam.ast.TAMFactory;
  * @author Marc Pantel
  */
 public class ConstantAccess extends AbstractAccess {
-	
+
 	protected ConstantDeclaration declaration;
-	
+
 	/**
 	 * Creates a variable use expression Abstract Syntax Tree node.
 	 * @param _name Name of the used variable.
@@ -24,10 +24,11 @@ public class ConstantAccess extends AbstractAccess {
 	public ConstantAccess(ConstantDeclaration _declaration) {
 		this.declaration = _declaration;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.AbstractUse#getDeclaration()
 	 */
+	@Override
 	public Declaration getDeclaration() {
 		return this.declaration;
 	}
@@ -35,6 +36,7 @@ public class ConstantAccess extends AbstractAccess {
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.AbstractUse#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
+	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		return this.declaration.getValue().getCode(_factory);
 	}

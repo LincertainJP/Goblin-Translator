@@ -1,9 +1,8 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
@@ -23,7 +22,7 @@ public class Couple implements AccessibleExpression {
 	 * AST node for the expression whose value is the first value in a couple expression.
 	 */
 	private AccessibleExpression first;
-	
+
 	/**
 	 * AST node for the expression whose value is the second value in a couple expression.
 	 */
@@ -38,7 +37,7 @@ public class Couple implements AccessibleExpression {
 		this.first = _first;
 		this.second = _second;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -46,7 +45,7 @@ public class Couple implements AccessibleExpression {
 	public String toString() {
 		return "< " + this.first + ", " + this.second + ">";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -56,7 +55,7 @@ public class Couple implements AccessibleExpression {
 		boolean _second = this.second.collectAndPartialResolve(_scope);
 		return _first && _second;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */

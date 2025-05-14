@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.instruction.declaration;
 
@@ -26,17 +26,17 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 * Name of the function
 	 */
 	protected String name;
-	
+
 	/**
 	 * AST node for the returned type of the function
 	 */
 	protected Type type;
-	
+
 	/**
 	 * List of AST nodes for the formal parameters of the function
 	 */
 	protected List<ParameterDeclaration> parameters;
-	
+
 	/**
 	 * @return the parameters
 	 */
@@ -62,7 +62,7 @@ public class FunctionDeclaration implements Instruction, Declaration {
 		this.parameters = _parameters;
 		this.body = _body;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -86,7 +86,7 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	public String getName() {
 		return this.name;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Declaration#getType()
 	 */
@@ -94,7 +94,7 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	public Type getType() {
 		return this.type;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -102,13 +102,13 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in FunctionDeclaration.");
 	}
-	
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
 
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */

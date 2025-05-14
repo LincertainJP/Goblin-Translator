@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.type;
 
@@ -23,7 +23,7 @@ public class FunctionType implements Type {
 
 	public FunctionType(Type _result, Iterable<Type> _parameters) {
 		this.result = _result;
-		this.parameters = new LinkedList<Type>();
+		this.parameters = new LinkedList<>();
 		for (Type _type : _parameters) {
 			this.parameters.add(_type);
 		}
@@ -76,7 +76,7 @@ public class FunctionType implements Type {
 		}
 		return _result + ") -> " + this.result;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */

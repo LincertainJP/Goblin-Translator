@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.type;
 
@@ -10,7 +10,7 @@ import fr.n7.stl.util.Logger;
 
 /**
  * Implementation of the Abstract Syntax Tree node for a named type.
- * 
+ *
  * @author Marc Pantel
  *
  */
@@ -32,7 +32,7 @@ public class NamedType implements Type {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see fr.n7.stl.block.ast.Type#equalsTo(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
@@ -46,7 +46,7 @@ public class NamedType implements Type {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see fr.n7.stl.block.ast.Type#compatibleWith(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
@@ -60,7 +60,7 @@ public class NamedType implements Type {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see fr.n7.stl.block.ast.Type#merge(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
@@ -78,7 +78,7 @@ public class NamedType implements Type {
 
 	/**
 	 * Provide the target type of the named type (i.e. type associated to the name).
-	 * 
+	 *
 	 * @return Type associated to the name.
 	 */
 	public Type getType() {
@@ -92,7 +92,7 @@ public class NamedType implements Type {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see fr.n7.stl.block.ast.Type#length(int)
 	 */
 	@Override
@@ -102,7 +102,7 @@ public class NamedType implements Type {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -112,7 +112,7 @@ public class NamedType implements Type {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override

@@ -1,14 +1,12 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.instruction;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.instruction.declaration.ConstantDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
-import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
@@ -46,7 +44,7 @@ public class Assignment implements Instruction, Expression {
 	public String toString() {
 		return this.assignable + " = " + this.value.toString() + ";\n";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
@@ -61,9 +59,9 @@ public class Assignment implements Instruction, Expression {
 			return false;
 		}
 		return ok && (this.assignable.collectAndPartialResolve(scope) && this.value.collectAndPartialResolve(scope));
-		
+
 	}
-	
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		return this.collectAndPartialResolve(_scope);
@@ -93,13 +91,13 @@ public class Assignment implements Instruction, Expression {
 		Type t_value = this.value.getType();
 		Type t_variable = this.assignable.getType();
 		if(!(t_variable.compatibleWith(t_value))) {
-			Logger.error("le type de " + this.assignable.toString() + "(" + t_variable.toString() 
-				+ ") et le type de la valeur attribuée (" + t_value.toString() + ") ne sont pas compatibles.");
+			Logger.error("le type de " + this.assignable.toString() + "(" + t_variable.toString()
+			+ ") et le type de la valeur attribuée (" + t_value.toString() + ") ne sont pas compatibles.");
 			return false;
 		}
 		return true;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register, int)
 	 */

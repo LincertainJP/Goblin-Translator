@@ -1,21 +1,15 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.instruction;
 
-import java.util.Optional;
-
-import com.sun.jdi.BooleanType;
-
 import fr.n7.stl.minic.ast.Block;
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.tam.ast.Fragment;
-import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
@@ -58,13 +52,13 @@ public class Conditional implements Instruction {
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		if (this.elseBranch != null) {
-			if (this.elseBranch.collectAndPartialResolve(scope) == false) {
+			if (!this.elseBranch.collectAndPartialResolve(scope)) {
 				return false;
 			}
 		}
 		return (this.thenBranch.collectAndPartialResolve(scope) && this.condition.collectAndPartialResolve(scope));
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -72,19 +66,19 @@ public class Conditional implements Instruction {
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		return this.collectAndPartialResolve(_scope);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 		if (this.elseBranch != null) {
-			if (this.elseBranch.completeResolve(scope) == false) {
+			if (!this.elseBranch.completeResolve(scope)) {
 				return false;
 			}
 		}
 		return (this.thenBranch.completeResolve(scope) && this.condition.completeResolve(scope));
-	}	
+	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Instruction#checkType()
@@ -92,11 +86,11 @@ public class Conditional implements Instruction {
 	@Override
 	public boolean checkType() {
 		if (this.elseBranch != null) {
-			if (this.elseBranch.checkType() == false) {
+			if (!this.elseBranch.checkType()) {
 				return false;
 			}
 		}
-		if (this.condition.getType().equalsTo(AtomicType.BooleanType) == false) {
+		if (!this.condition.getType().equalsTo(AtomicType.BooleanType)) {
 			Logger.error("Erreur de Type: une condition doit être une variable booléenne.");
 			return false;
 		}
@@ -115,7 +109,7 @@ public class Conditional implements Instruction {
 		this.elseBranch.allocateMemory(register, offset);
 		this.thenBranch.allocateMemory(register, offset);
 		return offset;
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -128,7 +122,7 @@ public class Conditional implements Instruction {
 
 		fragCond.append(this.condition.getCode(factory));
 		fragCond.add(factory.createJumpIf("if" + lNum, 1));
-		
+
 		if (!(this.elseBranch == null)) {
 			fragCond.append(this.elseBranch.getCode(factory));
 		}

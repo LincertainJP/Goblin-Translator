@@ -1,9 +1,8 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.allocation;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
@@ -34,9 +33,9 @@ public class ArrayAllocation implements AccessibleExpression, AssignableExpressi
 	 */
 	@Override
 	public String toString() {
-		return "new " + this.element + "[ " + this.size + " ]"; 
+		return "new " + this.element + "[ " + this.size + " ]";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -44,7 +43,7 @@ public class ArrayAllocation implements AccessibleExpression, AssignableExpressi
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		return this.size.collectAndPartialResolve(scope);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */

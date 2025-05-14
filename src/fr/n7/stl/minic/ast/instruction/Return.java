@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.instruction;
 
@@ -7,8 +7,8 @@ import java.security.InvalidParameterException;
 
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
-import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
+import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -22,7 +22,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
 public class Return implements Instruction {
 
 	protected Expression value;
-	
+
 	protected FunctionDeclaration function;
 
 	public Return(Expression _value) {
@@ -37,7 +37,7 @@ public class Return implements Instruction {
 	public String toString() {
 		return ((this.function != null)?("// Return in function : " + this.function.getName() + "\n"):"") + "return " + this.value + ";\n";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -45,7 +45,7 @@ public class Return implements Instruction {
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		throw new SemanticsUndefinedException( "Semantics collect is undefined in Return.");
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -53,11 +53,11 @@ public class Return implements Instruction {
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		throw new SemanticsUndefinedException( "Semantics resolve is undefined in Return.");
 	}
-	
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		if (this.function == null) {
-			this.function = _container;		
+			this.function = _container;
 		} else {
 			throw new InvalidParameterException("Trying to set a function declaration to a return instruction when one has already been set.");
 		}

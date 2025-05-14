@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.type;
 
@@ -16,13 +16,13 @@ import fr.n7.stl.minic.ast.scope.HierarchicalScope;
  *
  */
 public class SequenceType implements Type {
-	
+
 	private List<Type> types;
 
 	public SequenceType() {
-		this.types = new LinkedList<Type>();
+		this.types = new LinkedList<>();
 	}
-	
+
 	public void add(Type _type) {
 		this.types.add(_type);
 	}
@@ -157,7 +157,7 @@ public class SequenceType implements Type {
 		}
 		return _result;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */

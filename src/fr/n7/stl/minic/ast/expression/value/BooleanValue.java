@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.value;
 
@@ -15,7 +15,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
  *
  */
 public enum BooleanValue implements Value {
-	
+
 	/**
 	 * Represents the True value.
 	 */
@@ -24,19 +24,20 @@ public enum BooleanValue implements Value {
 	 * Represents the False value.
 	 */
 	False;
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Enum#toString()
 	 */
+	@Override
 	public String toString() {
 		switch (this) {
 		case False: return "false";
 		case True: return "true";
 		default: throw new IllegalArgumentException( "The default case should never be triggered.");
-		
+
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -69,16 +70,16 @@ public enum BooleanValue implements Value {
 	public Fragment getCode(TAMFactory _factory) {
 		Fragment _code = _factory.createFragment();
 		switch (this) {
-			case True : {
-				_code.add(_factory.createLoadL(1));
-				break;
-			}
-			case False : {
-				_code.add(_factory.createLoadL(0));
-				break;
-			}
+		case True : {
+			_code.add(_factory.createLoadL(1));
+			break;
+		}
+		case False : {
+			_code.add(_factory.createLoadL(0));
+			break;
+		}
 		}
 		return _code;
 	}
-	
+
 }

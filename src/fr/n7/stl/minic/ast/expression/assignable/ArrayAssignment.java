@@ -1,13 +1,12 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.assignable;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.AbstractArray;
-import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.TAMFactory;
 
 /**
@@ -24,14 +23,20 @@ public class ArrayAssignment extends AbstractArray<AssignableExpression> impleme
 	public ArrayAssignment(AssignableExpression _array, AccessibleExpression _index) {
 		super(_array, _index);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.impl.ArrayAccessImpl#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode undefined in ArrayAssignment.");
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragArrAss = factory.createFragment();
+		int size = this.array.getType().length();
+		fragArrAss.append(this.index.getCode(factory));
+		fragArrAss.append(this.array.getCode(factory));
+		fragArrAss.add(Library.IAdd);
+		fragArrAss.add(factory.createStoreI(size));
+		return fragArrAss;
 	}
 
-	
+
 }

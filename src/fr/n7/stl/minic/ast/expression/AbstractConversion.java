@@ -1,11 +1,8 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
-import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
-import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.instruction.declaration.TypeDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
@@ -32,16 +29,17 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 		this.name = _type;
 		this.type = null;
 	}
-	
+
 	public AbstractConversion(TargetType _target, Type _type) {
 		this.target = _target;
 		this.name = null;
 		this.type = _type;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString() {
 		if (this.type == null) {
 			return "(" + this.name + ") " + this.target;
@@ -57,7 +55,7 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 	public Type getType() {
 		return this.type;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */

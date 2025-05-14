@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.type.declaration;
 
@@ -43,6 +43,7 @@ public class FieldDeclaration implements Declaration {
 	 * Provide the type of the field in a record.
 	 * @return Type of the field.
 	 */
+	@Override
 	public Type getType() {
 		return this.type;
 	}
@@ -54,7 +55,7 @@ public class FieldDeclaration implements Declaration {
 	public int getOffset() {
 		return this.offset;
 	}
-	
+
 	public int computerOffset( int _offset ) {
 		this.offset = _offset;
 		return this.type.length();

@@ -1,7 +1,9 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.value;
+
+import org.apache.commons.text.StringEscapeUtils;
 
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
@@ -9,7 +11,6 @@ import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
-import org.apache.commons.text.*;
 
 /**
  * Implementation of the Abstract Syntax Tree node for an integer constant expression.
@@ -19,7 +20,7 @@ import org.apache.commons.text.*;
 public class CharacterValue implements Value {
 
 	private char value;
-	
+
 	/**
 	 * Builds an integer value expression implementation from a textual representation of the integer.
 	 * @param _text Textual representation of the integer value.
@@ -35,7 +36,7 @@ public class CharacterValue implements Value {
 	public String toString() {
 		return "'" + this.value + "'";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -59,9 +60,9 @@ public class CharacterValue implements Value {
 	public Type getType() {
 		return AtomicType.CharacterType;
 	}
-	
+
 	/* (non-Javadoc)
-	 * Pushes the value on the stack.	
+	 * Pushes the value on the stack.
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override

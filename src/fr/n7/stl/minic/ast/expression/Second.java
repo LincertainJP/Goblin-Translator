@@ -1,9 +1,8 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
@@ -25,7 +24,7 @@ public class Second implements AccessibleExpression {
 	 * AST node for the expression whose value must whose second element is extracted by the expression.
 	 */
 	private AccessibleExpression target;
-	
+
 	/**
 	 * Builds an Abstract Syntax Tree node for an expression extracting the second component of a couple.
 	 * @param _target : AST node for the expression whose value must whose second element is extracted by the expression.
@@ -33,10 +32,11 @@ public class Second implements AccessibleExpression {
 	public Second(AccessibleExpression _target) {
 		this.target = _target;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString() {
 		return "(snd" + this.target + ")";
 	}
@@ -52,7 +52,7 @@ public class Second implements AccessibleExpression {
 		}
 		return ((CoupleType) this.target.getType()).getSecond();
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */

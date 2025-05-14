@@ -1,10 +1,9 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.instruction;
 
 import fr.n7.stl.minic.ast.Block;
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -37,7 +36,7 @@ public class Iteration implements Instruction {
 	public String toString() {
 		return "while (" + this.condition + " )" + this.body;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -50,13 +49,13 @@ public class Iteration implements Instruction {
 		}
 		return this.body.collectAndPartialResolve(_scope);
 	}
-	
-	
+
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		return this.collectAndPartialResolve(_scope);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.type;
 
@@ -19,7 +19,7 @@ public class PointerType implements Type {
 	public PointerType(Type _element) {
 		this.element = _element;
 	}
-	
+
 	public Type getPointedType() {
 		return this.element;
 	}
@@ -63,7 +63,7 @@ public class PointerType implements Type {
 	public String toString() {
 		return "(" + this.element + " *)";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */

@@ -1,9 +1,8 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.instruction.declaration;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -25,12 +24,12 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	 * Name of the constant
 	 */
 	protected String name;
-	
+
 	/**
 	 * AST node for the type of the constant
 	 */
 	protected Type type;
-	
+
 	/**
 	 * AST node for the expression that computes the value of the constant
 	 */
@@ -55,7 +54,7 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	public String getName() {
 		return this.name;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Declaration#getType()
 	 */
@@ -63,7 +62,7 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	public Type getType() {
 		return this.type;
 	}
-	
+
 	/**
 	 * Provide the value associated to a name in constant declaration.
 	 * @return Value from the declaration.
@@ -71,14 +70,15 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	public Expression getValue() {
 		return this.value;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString() {
 		return "const " + this.type + " " + this.name + " = " + this.value + ";\n";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -93,12 +93,12 @@ public class ConstantDeclaration implements Instruction, Declaration {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		return this.collectAndPartialResolve(_scope);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -114,8 +114,8 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	public boolean checkType() {
 		Type t_value = this.value.getType();
 		if(!(this.type.compatibleWith(t_value))) {
-			Logger.error("le type déclaré de la constante : " + this.name + "(" + this.type.toString() 
-				+ ") et le type de la valeur attribuée (" + t_value.toString() + ") ne sont pas compatibles.");
+			Logger.error("le type déclaré de la constante : " + this.name + "(" + this.type.toString()
+			+ ") et le type de la valeur attribuée (" + t_value.toString() + ") ne sont pas compatibles.");
 			return false;
 		}
 		return true;
@@ -125,7 +125,7 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	 * @see fr.n7.stl.block.ast.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register, int)
 	 */
 	@Override
-	public int allocateMemory(Register register, int offset) {	
+	public int allocateMemory(Register register, int offset) {
 		return offset;
 	}
 

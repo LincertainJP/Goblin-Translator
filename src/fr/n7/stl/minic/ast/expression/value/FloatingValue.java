@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.value;
 
@@ -18,7 +18,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
 public class FloatingValue implements Value {
 
 	private float value;
-	
+
 	/**
 	 * Builds an integer value expression implementation from a textual representation of the integer.
 	 * @param _text Textual representation of the integer value.
@@ -34,7 +34,7 @@ public class FloatingValue implements Value {
 	public String toString() {
 		return "" + this.value;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -58,7 +58,7 @@ public class FloatingValue implements Value {
 	public Type getType() {
 		return AtomicType.FloatingType;
 	}
-	
+
 	/* (non-Javadoc)
 	 * Pushes the value on the stack.
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
@@ -66,7 +66,7 @@ public class FloatingValue implements Value {
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		Fragment _fragment = _factory.createFragment();
-//		_fragment.add(_factory.createLoadL(this.value));
+		//		_fragment.add(_factory.createLoadL(this.value));
 		return _fragment;
 	}
 

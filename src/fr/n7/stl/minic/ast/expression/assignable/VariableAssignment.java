@@ -1,9 +1,8 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.assignable;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.AbstractIdentifier;
 import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -19,7 +18,7 @@ import fr.n7.stl.util.Logger;
  *
  */
 public class VariableAssignment extends AbstractIdentifier implements AssignableExpression {
-	
+
 	protected VariableDeclaration declaration;
 
 	/**
@@ -29,13 +28,13 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 	public VariableAssignment(String _name) {
 		super(_name);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.AbstractIdentifier#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		if (((HierarchicalScope<Declaration>)scope).knows(this.name)) {
+		if (scope.knows(this.name)) {
 			Declaration declaration = scope.get(this.name);
 			if (declaration instanceof VariableDeclaration) {
 				this.declaration = ((VariableDeclaration) declaration);
@@ -46,10 +45,10 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 			}
 		} else {
 			Logger.error("The identifier " + this.name + " has not been found.");
-			return false;	
+			return false;
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.AbstractIdentifier#resolve(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
@@ -57,7 +56,7 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 		return this.declaration.completeResolve(scope);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.impl.VariableUseImpl#getType()
 	 */

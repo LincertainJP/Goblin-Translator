@@ -21,7 +21,7 @@ public class TypeDeclaration implements Declaration, Instruction {
 	 * Name of the declared type
 	 */
 	private String name;
-	
+
 	/**
 	 * AST node for the type associated to the name
 	 */
@@ -44,7 +44,7 @@ public class TypeDeclaration implements Declaration, Instruction {
 	public String getName() {
 		return this.name;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -58,7 +58,7 @@ public class TypeDeclaration implements Declaration, Instruction {
 		scope.register(this);
 		return true;
 	}
-	
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
@@ -77,6 +77,7 @@ public class TypeDeclaration implements Declaration, Instruction {
 	 * Provide the type associated to a name in a type declaration.
 	 * @return Type from the declaration.
 	 */
+	@Override
 	public Type getType() {
 		return this.type;
 	}
@@ -112,5 +113,5 @@ public class TypeDeclaration implements Declaration, Instruction {
 	public Fragment getCode(TAMFactory _factory) {
 		return _factory.createFragment();
 	}
-	
+
 }

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.accessible;
 
@@ -26,17 +26,17 @@ public class BinaryExpression implements AccessibleExpression {
 	 * AST node for the expression whose value is the left parameter for the binary expression.
 	 */
 	protected AccessibleExpression left;
-	
+
 	/**
 	 * AST node for the expression whose value is the left parameter for the binary expression.
 	 */
 	protected AccessibleExpression right;
-	
+
 	/**
 	 * Binary operator computed by the Binary Expression.
 	 */
 	protected BinaryOperator operator;
-	
+
 	/**
 	 * Builds a binary expression Abstract Syntax Tree node from the left and right sub-expressions
 	 * and the binary operation.
@@ -57,14 +57,14 @@ public class BinaryExpression implements AccessibleExpression {
 	public String toString() {
 		return "(" + this.left + " " + this.operator + " " + this.right + ")";
 	}
-	
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		boolean _left = this.left.collectAndPartialResolve(_scope);
 		boolean _right = this.right.collectAndPartialResolve(_scope);
 		return _left && _right;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -87,53 +87,53 @@ public class BinaryExpression implements AccessibleExpression {
 			Logger.warning("Type error in binary expression : Merged parameters " + _left + " " + _right);
 		}
 		switch (this.operator) {
-			case Add: {
-				if (resultType.compatibleWith(AtomicType.FloatingType) 
-						|| resultType.compatibleWith(AtomicType.StringType))  {
-					return resultType;
-				} else {
-					Logger.warning("Type error in binary expression : " + this.operator + " parameter " + resultType);
-					return AtomicType.ErrorType;
-				}
+		case Add: {
+			if (resultType.compatibleWith(AtomicType.FloatingType)
+					|| resultType.compatibleWith(AtomicType.StringType))  {
+				return resultType;
+			} else {
+				Logger.warning("Type error in binary expression : " + this.operator + " parameter " + resultType);
+				return AtomicType.ErrorType;
 			}
-			case Substract:
-			case Multiply:
-			case Divide: {
-				if (resultType.compatibleWith(AtomicType.FloatingType)) {
-					return resultType;
-				} else {
-					Logger.warning("Type error in binary expression : " + this.operator + " parameter " + resultType);
-					return AtomicType.ErrorType;
-				}
+		}
+		case Substract:
+		case Multiply:
+		case Divide: {
+			if (resultType.compatibleWith(AtomicType.FloatingType)) {
+				return resultType;
+			} else {
+				Logger.warning("Type error in binary expression : " + this.operator + " parameter " + resultType);
+				return AtomicType.ErrorType;
 			}
-			case Modulo: {
-				if (resultType.compatibleWith(AtomicType.IntegerType)) {
-					return resultType;
-				} else {
-					Logger.warning("Type error in binary expression : " + this.operator + " parameter " + resultType);
-					return AtomicType.ErrorType;
-				}
+		}
+		case Modulo: {
+			if (resultType.compatibleWith(AtomicType.IntegerType)) {
+				return resultType;
+			} else {
+				Logger.warning("Type error in binary expression : " + this.operator + " parameter " + resultType);
+				return AtomicType.ErrorType;
 			}
-			case Lesser:
-			case Greater:
-			case LesserOrEqual:
-			case GreaterOrEqual: {
-				if (resultType.compatibleWith(AtomicType.FloatingType)) {
-					return AtomicType.BooleanType;
-				} else {
-					Logger.warning("Type error in binary expression : " + this.operator + " parameter " + resultType);
-					return AtomicType.ErrorType;
-				}				
+		}
+		case Lesser:
+		case Greater:
+		case LesserOrEqual:
+		case GreaterOrEqual: {
+			if (resultType.compatibleWith(AtomicType.FloatingType)) {
+				return AtomicType.BooleanType;
+			} else {
+				Logger.warning("Type error in binary expression : " + this.operator + " parameter " + resultType);
+				return AtomicType.ErrorType;
 			}
-			case Equals:
-			case Different: {
-				if (resultType.equals(AtomicType.ErrorType)) {
-					return resultType;
-				} else {
-					return AtomicType.BooleanType;
-				}
+		}
+		case Equals:
+		case Different: {
+			if (resultType.equals(AtomicType.ErrorType)) {
+				return resultType;
+			} else {
+				return AtomicType.BooleanType;
 			}
-			default : return AtomicType.ErrorType;
+		}
+		default : return AtomicType.ErrorType;
 		}
 	}
 

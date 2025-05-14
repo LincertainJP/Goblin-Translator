@@ -1,10 +1,10 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.accessible;
 
-import fr.n7.stl.minic.ast.expression.AbstractIdentifier;
 import fr.n7.stl.minic.ast.expression.AbstractAccess;
+import fr.n7.stl.minic.ast.expression.AbstractIdentifier;
 import fr.n7.stl.minic.ast.instruction.declaration.ConstantDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -23,9 +23,9 @@ import fr.n7.stl.util.Logger;
  * TODO : Should also hold a function and not only a variable.
  */
 public class IdentifierAccess extends AbstractIdentifier implements AccessibleExpression {
-	
+
 	protected AbstractAccess expression;
-	
+
 	/**
 	 * Creates a variable use expression Abstract Syntax Tree node.
 	 * @param _name Name of the used variable.
@@ -33,21 +33,21 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	public IdentifierAccess(String _name) {
 		super(_name);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	@Override 
+	@Override
 	public String toString() {
 		return this.name;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		if (((HierarchicalScope<Declaration>)_scope).knows(this.name)) {
+		if (_scope.knows(this.name)) {
 			Declaration _declaration = _scope.get(this.name);
 			if (_declaration instanceof VariableDeclaration) {
 				this.expression = new VariableAccess((VariableDeclaration) _declaration);
@@ -60,14 +60,14 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 		}
 		return true;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		if (this.expression == null) {
-			if (((HierarchicalScope<Declaration>)_scope).knows(this.name)) {
+			if (_scope.knows(this.name)) {
 				Declaration _declaration = _scope.get(this.name);
 				if (_declaration instanceof ConstantDeclaration) {
 					// TODO : refactor the management of Constants
@@ -85,7 +85,7 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 			return true;
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */

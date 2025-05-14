@@ -17,7 +17,7 @@ public abstract class AbstractPointer<PointerKind extends Expression> implements
 	 * AST node that represents an expression whose value is a pointer.
 	 */
 	protected PointerKind pointer;
-	
+
 	/**
 	 * Construction for the implementation of a pointer content access expression Abstract Syntax Tree node.
 	 * @param _pointer Abstract Syntax Tree for the pointer expression in a pointer content access expression.
@@ -33,27 +33,28 @@ public abstract class AbstractPointer<PointerKind extends Expression> implements
 	public String toString() {
 		return "(*" + this.pointer + ")";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics collect is not implemented in AbstractPointer.");		
+		throw new SemanticsUndefinedException("Semantics collect is not implemented in AbstractPointer.");
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is not implemented in AbstractPointer.");		
+		throw new SemanticsUndefinedException("Semantics resolve is not implemented in AbstractPointer.");
 	}
 
 	/**
 	 * Synthesized Semantics attribute to compute the type of an expression.
 	 * @return Synthesized Type of the expression.
 	 */
+	@Override
 	public Type getType() {
 		throw new SemanticsUndefinedException("Semantics getType is not implemented in PointerAccess.");
 	}

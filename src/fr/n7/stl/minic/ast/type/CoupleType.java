@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.type;
 
@@ -58,7 +58,7 @@ public class CoupleType implements Type {
 	@Override
 	public Type merge(Type _other) {
 		if (_other instanceof CoupleType) {
-			return new CoupleType( 
+			return new CoupleType(
 					this.first.merge(((CoupleType) _other).first),
 					this.second.merge(((CoupleType) _other).second));
 		} else {
@@ -97,7 +97,7 @@ public class CoupleType implements Type {
 	public Type getSecond() {
 		return this.second;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */

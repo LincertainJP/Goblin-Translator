@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.type;
 
@@ -16,19 +16,19 @@ import fr.n7.stl.minic.ast.type.declaration.LabelDeclaration;
  *
  */
 public class EnumerationType implements Type, Declaration {
-	
+
 	private String name;
-	
+
 	private List<LabelDeclaration> labels;
 
 	/**
-	 * 
+	 *
 	 */
 	public EnumerationType(String _name, List<LabelDeclaration> _labels) {
 		this.name = _name;
 		this.labels = _labels;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -76,7 +76,7 @@ public class EnumerationType implements Type, Declaration {
 	public int length() {
 		throw new SemanticsUndefinedException("Semantics length is not implemented in EnumerationType.");
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */

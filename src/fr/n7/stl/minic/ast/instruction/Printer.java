@@ -1,19 +1,16 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.instruction;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
-import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
-import fr.n7.stl.tam.ast.TAMInstruction;
 
 /**
  * Implementation of the Abstract Syntax Tree node for a printer instruction.
@@ -35,7 +32,7 @@ public class Printer implements Instruction {
 	public String toString() {
 		return "print " + this.parameter + ";\n";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -43,12 +40,12 @@ public class Printer implements Instruction {
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		return parameter.collectAndPartialResolve(_scope);
 	}
-	
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
 		return this.collectAndPartialResolve(scope);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
@@ -62,8 +59,8 @@ public class Printer implements Instruction {
 	 */
 	@Override
 	public boolean checkType() {
-		return true;//(this.parameter.getType().compatibleWith(AtomicType.BooleanType) 
-					//|| this.parameter.getType().compatibleWith(AtomicType.IntegerType) )
+		return true;//(this.parameter.getType().compatibleWith(AtomicType.BooleanType)
+		//|| this.parameter.getType().compatibleWith(AtomicType.IntegerType) )
 	}
 
 	/* (non-Javadoc)

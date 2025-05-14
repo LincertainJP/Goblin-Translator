@@ -1,12 +1,11 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression.accessible;
 
 import java.util.Iterator;
 import java.util.List;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
@@ -22,7 +21,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
  */
 public class Sequence implements AccessibleExpression {
 
-	
+
 	/**
 	 * List of AST nodes of the expressions computing the values in the sequence.
 	 */
@@ -75,7 +74,7 @@ public class Sequence implements AccessibleExpression {
 		}
 		return _result;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */
@@ -95,7 +94,7 @@ public class Sequence implements AccessibleExpression {
 	public Fragment getCode(TAMFactory factory) {
 		Fragment fragSeq = factory.createFragment();
 		for (AccessibleExpression expr : this.values) {
-			fragSeq.append(expr.getCode(factory));		
+			fragSeq.append(expr.getCode(factory));
 		}
 		return fragSeq;
 	}

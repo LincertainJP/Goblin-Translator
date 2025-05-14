@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.util;
 
@@ -12,7 +12,7 @@ public class BlockSemanticsError extends RuntimeException {
 	private static final long serialVersionUID = 2853370029801143645L;
 
 	/**
-	 * 
+	 *
 	 */
 	public BlockSemanticsError() {
 		// TODO Auto-generated constructor stub

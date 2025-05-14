@@ -1,9 +1,8 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast.expression;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.AtomicType;
@@ -24,17 +23,17 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 	 * AST node for the expression whose value is the condition for the conditional expression.
 	 */
 	protected Expression condition;
-	
+
 	/**
 	 * AST node for the expression whose value is the then parameter for the conditional expression.
 	 */
 	protected ExpressionKind thenExpression;
-	
+
 	/**
 	 * AST node for the expression whose value is the else parameter for the conditional expression.
 	 */
 	protected ExpressionKind elseExpression;
-	
+
 	/**
 	 * Builds a binary expression Abstract Syntax Tree node from the left and right sub-expressions
 	 * and the binary operation.
@@ -53,7 +52,7 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		return this.condition.collectAndPartialResolve(scope) && this.thenExpression.collectAndPartialResolve(scope) 
+		return this.condition.collectAndPartialResolve(scope) && this.thenExpression.collectAndPartialResolve(scope)
 				&& this.elseExpression.collectAndPartialResolve(scope);
 	}
 
@@ -62,7 +61,7 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		return this.condition.completeResolve(scope) && this.thenExpression.completeResolve(scope) 
+		return this.condition.completeResolve(scope) && this.thenExpression.completeResolve(scope)
 				&& this.elseExpression.completeResolve(scope);
 	}
 
@@ -73,7 +72,7 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 	public String toString() {
 		return "(" + this.condition + " ? " + this.thenExpression + " : " + this.elseExpression + ")";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */
@@ -85,7 +84,7 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 		} else if (!(this.elseExpression.getType().compatibleWith(this.thenExpression.getType()) )) {
 			Logger.error("Dans un opérateur ternaire, le type de l'expression else "
 					+ "et le type l'expression then doivent être compatibles");
-			throw new TypeErrorException(this.elseExpression.getType().toString() + " incompatible with " 
+			throw new TypeErrorException(this.elseExpression.getType().toString() + " incompatible with "
 					+ this.thenExpression.getType().toString());
 		}
 		return this.elseExpression.getType().merge(this.thenExpression.getType());
@@ -109,7 +108,7 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 		fragAbsCondIf.addSuffix("fi" + lNum);
 
 		fragAbsCond.append(fragAbsCondIf);
-		
+
 		return fragAbsCond;
 	}
 }

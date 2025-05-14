@@ -7,7 +7,7 @@ import fr.n7.stl.minic.ast.type.Type;
  *
  */
 public interface Declaration {
-	
+
 	/**
 	 * Provide the identifier (i.e. name) given to the declaration.
 	 * @return Name of the declaration.

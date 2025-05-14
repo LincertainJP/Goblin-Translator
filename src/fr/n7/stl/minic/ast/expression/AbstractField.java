@@ -17,7 +17,7 @@ public abstract class AbstractField<RecordKind extends Expression> implements Ex
 	protected RecordKind record;
 	protected String name;
 	protected FieldDeclaration field;
-	
+
 	/**
 	 * Construction for the implementation of a record field access expression Abstract Syntax Tree node.
 	 * @param _record Abstract Syntax Tree for the record part in a record field access expression.
@@ -35,7 +35,7 @@ public abstract class AbstractField<RecordKind extends Expression> implements Ex
 	public String toString() {
 		return this.record + "." + this.name;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
@@ -56,6 +56,7 @@ public abstract class AbstractField<RecordKind extends Expression> implements Ex
 	 * Synthesized Semantics attribute to compute the type of an expression.
 	 * @return Synthesized Type of the expression.
 	 */
+	@Override
 	public Type getType() {
 		throw new SemanticsUndefinedException( "getType is undefined in FieldAccess.");
 	}

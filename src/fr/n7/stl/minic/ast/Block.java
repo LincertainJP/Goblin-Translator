@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.n7.stl.minic.ast;
 
@@ -17,10 +17,10 @@ import fr.n7.stl.tam.ast.TAMFactory;
 /**
  * Represents a Block node in the Abstract Syntax Tree node for the Bloc language.
  * Declares the various semantics attributes for the node.
- * 
+ *
  * A block contains declarations. It is thus a Scope even if a separate SymbolTable is used in
  * the attributed semantics in order to manage declarations.
- * 
+ *
  * @author Marc Pantel
  *
  */
@@ -30,7 +30,7 @@ public class Block {
 	 * Sequence of instructions contained in a block.
 	 */
 	protected List<Instruction> instructions;
-	
+
 	protected SymbolTable localTDS;
 
 	/**
@@ -39,7 +39,7 @@ public class Block {
 	public Block(List<Instruction> _instructions) {
 		this.instructions = _instructions;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -51,7 +51,7 @@ public class Block {
 		}
 		return "{\n" + _local + "}\n" ;
 	}
-	
+
 	/**
 	 * Inherited Semantics attribute to collect all the identifiers declaration and check
 	 * that the declaration are allowed.
@@ -69,7 +69,7 @@ public class Block {
 		}
 		return ok;
 	}
-	
+
 	/**
 	 * Inherited Semantics attribute to collect all the identifiers declaration and check
 	 * that the declaration are allowed.
@@ -83,7 +83,7 @@ public class Block {
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		return this.collectAndPartialResolve(_scope);
 	}
-	
+
 	/**
 	 * Inherited Semantics attribute to check that all identifiers have been defined and
 	 * associate all identifiers uses with their definitions.
@@ -102,7 +102,7 @@ public class Block {
 	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.
 	 * @return Synthesized True if the instruction is well typed, False if not.
-	 */	
+	 */
 	public boolean checkType() {
 		boolean typeOk = true;
 		for(Instruction istr : this.instructions) {
@@ -113,10 +113,10 @@ public class Block {
 
 	/**
 	 * Inherited Semantics attribute to allocate memory for the variables declared in the instruction.
-	 * Synthesized Semantics attribute that compute the size of the allocated memory. 
+	 * Synthesized Semantics attribute that compute the size of the allocated memory.
 	 * @param _register Inherited Register associated to the address of the variables.
 	 * @param _offset Inherited Current offset for the address of the variables.
-	 */	
+	 */
 	public void allocateMemory(Register register, int offset) {
 		int dept = offset;
 		for (Instruction inst : this.instructions) {
