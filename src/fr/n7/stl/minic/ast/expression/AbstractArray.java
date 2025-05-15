@@ -3,6 +3,7 @@ package fr.n7.stl.minic.ast.expression;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.ArrayType;
 import fr.n7.stl.minic.ast.type.Type;
 
 /**
@@ -63,7 +64,7 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	 */
 	@Override
 	public Type getType() {
-		return this.array.getType();
+		return ((ArrayType) this.array.getType()).getType();
 	}
 
 }

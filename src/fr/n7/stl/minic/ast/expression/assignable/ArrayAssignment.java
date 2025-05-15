@@ -37,6 +37,4 @@ public class ArrayAssignment extends AbstractArray<AssignableExpression> impleme
 		fragArrAss.add(factory.createStoreI(size));
 		return fragArrAss;
 	}
-
-
 }

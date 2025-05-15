@@ -66,7 +66,10 @@ public class ArrayAllocation implements AccessibleExpression, AssignableExpressi
 	@Override
 	public Fragment getCode(TAMFactory factory) {
 		Fragment fragArrAll = factory.createFragment();
+		int sizeElement = this.element.length();
+		fragArrAll.add(factory.createLoadL(sizeElement));
 		fragArrAll.append(this.size.getCode(factory));
+		fragArrAll.add(Library.IMul);
 		fragArrAll.add(Library.MAlloc);
 		return fragArrAll;
 	}

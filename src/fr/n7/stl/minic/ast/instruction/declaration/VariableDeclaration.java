@@ -106,10 +106,9 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		boolean result = this.value.collectAndPartialResolve(scope);
 		if (scope.accepts(this)) {
 			scope.register(this);
-			return result;
+			return this.value.collectAndPartialResolve(scope);
 		} else {
 			Logger.error("la variable :\"" + this.name + "\" est déjà déclarée.");
 			return false;

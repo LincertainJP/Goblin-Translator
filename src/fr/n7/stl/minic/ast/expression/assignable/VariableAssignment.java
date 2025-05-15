@@ -7,6 +7,7 @@ import fr.n7.stl.minic.ast.expression.AbstractIdentifier;
 import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.ArrayType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -67,12 +68,22 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.impl.VariableUseImpl#getCode(fr.n7.stl.tam.ast.TAMFactory)
+	 * fragment.add(_factory.createLoadL(declaration.getType().length()));
+            fragment.add(TAMFactory.createBinaryOperator(BinaryOperator.Multiply));
+            fragment.add(_factory.createLoad(declaration.getRegister(), declaration.getOffset(), declaration.getType().length()));
+            fragment.add(TAMFactory.createBinaryOperator(BinaryOperator.Add));
+            fragment.add(_factory.createStoreI(declaration.getType().length()));
 	 */
 	@Override
 	public Fragment getCode(TAMFactory factory) {
 		VariableDeclaration decl = this.declaration;
 		Fragment fragVAss = factory.createFragment();
-		fragVAss.add(factory.createStore(decl.getRegister(), decl.getOffset(), decl.getType().length()));
+		if (decl.getType() instanceof ArrayType) {
+			fragVAss.add(factory.createLoad(decl.getRegister(), decl.getOffset(), decl.getType().length()));
+		} else {
+			fragVAss.add(factory.createStore(decl.getRegister(), decl.getOffset(), decl.getType().length()));
+		}
 		return fragVAss;
+
 	}
 }
