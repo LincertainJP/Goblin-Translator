@@ -49,7 +49,7 @@ public class ArrayAllocation implements AccessibleExpression, AssignableExpressi
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		return this.size.completeResolve(scope);
+		return this.element.completeResolve(scope) && this.size.completeResolve(scope);
 	}
 
 	/* (non-Javadoc)

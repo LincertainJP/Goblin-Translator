@@ -10,6 +10,7 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.TAMFactory;
 
 /**
@@ -36,16 +37,16 @@ public class PointerAllocation implements AccessibleExpression, AssignableExpres
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in PointerAllocation.");
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		return true;
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in PointerAllocation.");
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		return this.element.completeResolve(scope);
 	}
 
 	/* (non-Javadoc)
@@ -60,8 +61,11 @@ public class PointerAllocation implements AccessibleExpression, AssignableExpres
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in PointerAllocation.");
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragPtrAll = factory.createFragment();
+		fragPtrAll.add(factory.createLoadL(this.element.length()));
+		fragPtrAll.add(Library.MAlloc);
+		return fragPtrAll;
 	}
 
 }

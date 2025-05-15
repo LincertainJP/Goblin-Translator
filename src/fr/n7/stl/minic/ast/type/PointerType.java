@@ -3,7 +3,6 @@
  */
 package fr.n7.stl.minic.ast.type;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 
@@ -28,24 +27,42 @@ public class PointerType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#equalsTo(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean equalsTo(Type _other) {
-		throw new SemanticsUndefinedException("Semantics equalsTo undefined in PointerType.");
+	public boolean equalsTo(Type other) {
+		Type otherType = other;
+		if (otherType instanceof NamedType otht) {
+			otherType = otht.getType();
+		}
+		if (otherType instanceof PointerType ptrT) {
+			return this.element.equalsTo(ptrT.getPointedType());
+		}
+		return false;
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Type#compatibleWith(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean compatibleWith(Type _other) {
-		throw new SemanticsUndefinedException("Semantics compatibleWith undefined in PointerType.");
+	public boolean compatibleWith(Type other) {
+		Type otherType = other;
+		if (otherType instanceof NamedType otht) {
+			otherType = otht.getType();
+		}
+		return this.element.compatibleWith(otherType);
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Type#merge(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public Type merge(Type _other) {
-		throw new SemanticsUndefinedException("Semantics merge undefined in PointerType.");
+	public Type merge(Type other) {
+		Type otherType = other;
+		if (otherType instanceof NamedType otht) {
+			otherType = otht.getType();
+		}
+		if (otherType instanceof PointerType ptrT) {
+			return new PointerType(this.element.merge(ptrT.getPointedType()));
+		}
+		throw new TypeErrorException("tentative de merge le type " + other.toString() + " et un PointerType, opération impossible");
 	}
 
 	/* (non-Javadoc)
@@ -53,7 +70,7 @@ public class PointerType implements Type {
 	 */
 	@Override
 	public int length() {
-		throw new SemanticsUndefinedException("Semantics length undefined in PointerType.");
+		return 1;
 	}
 
 	/* (non-Javadoc)

@@ -3,11 +3,13 @@
  */
 package fr.n7.stl.minic.ast.expression.accessible;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.NamedType;
+import fr.n7.stl.minic.ast.type.PointerType;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.minic.ast.type.TypeErrorException;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 
@@ -33,16 +35,16 @@ public class AddressAccess implements AccessibleExpression {
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "collect is undefined in AddressAccess.");
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		return this.assignable.collectAndPartialResolve(scope);
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "resolve is undefined in AddressAccess.");
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		return this.assignable.completeResolve(scope);
 	}
 
 	/* (non-Javadoc)
@@ -50,15 +52,26 @@ public class AddressAccess implements AccessibleExpression {
 	 */
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException( "getType is undefined in AddressAccess.");
+		Type type = this.assignable.getType();
+		if (type instanceof NamedType nameT) {
+			type = nameT.getType();
+		}
+		if (type instanceof PointerType ptrT) {
+			return ptrT.getPointedType();
+		}
+		throw new TypeErrorException("tentative de déreferencer le type " +
+				this.assignable.getType().toString() + " qui n'est pas un pointeur, opération impossible");
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "getCode is undefined in AddressAccess.");
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragAdrAcc = factory.createFragment();
+		fragAdrAcc.append(this.assignable.getCode(factory));
+		fragAdrAcc.add(factory.createLoadI(this.assignable.getType().length()));
+		return fragAdrAcc;
 	}
 
 }

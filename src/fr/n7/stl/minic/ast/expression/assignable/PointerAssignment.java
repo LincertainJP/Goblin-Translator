@@ -7,6 +7,7 @@ import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.AbstractPointer;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.TAMFactory;
 
 /**
@@ -28,8 +29,11 @@ public class PointerAssignment extends AbstractPointer<AccessibleExpression> imp
 	 * @see fr.n7.stl.block.ast.impl.PointerAccessImpl#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode undefined in PointerAssignment.");
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragPtrAss = factory.createFragment();
+		fragPtrAss.append(this.pointer.getCode(factory));
+		fragPtrAss.add(factory.createStoreI(this.pointer.getType().length()));
+		return fragPtrAss;
 	}
 
 }
