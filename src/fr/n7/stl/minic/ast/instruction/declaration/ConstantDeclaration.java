@@ -83,10 +83,10 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		boolean result = this.value.collectAndPartialResolve(_scope);
-		if (_scope.accepts(this)) {
-			_scope.register(this);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		boolean result = this.value.collectAndPartialResolve(scope);
+		if (scope.accepts(this)) {
+			scope.register(this);
 			return result;
 		} else {
 			Logger.error("La constante :\"" + this.name + "\" est déjà déclarée.");
@@ -95,8 +95,15 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	}
 
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		return this.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		boolean result = this.value.collectAndPartialResolve(scope);
+		if (scope.accepts(this)) {
+			scope.register(this);
+			return result;
+		} else {
+			Logger.error("La constante :\"" + this.name + "\" a déjà été déclarée dans la fonction : " + container.getName());
+			return false;
+		}
 	}
 
 	/* (non-Javadoc)

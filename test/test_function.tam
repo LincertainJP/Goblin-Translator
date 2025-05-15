@@ -1,0 +1,11 @@
+JUMP deuxend
+deuxstart
+LOADL 13
+JUMP deuxretour
+deuxretour
+RETURN (1) 0
+deuxend
+CALL (LB) deuxstart
+SUBR IOut
+HALT
+

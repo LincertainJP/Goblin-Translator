@@ -23,7 +23,11 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 
 	private List<FieldDeclaration> fields;
 	private String name;
-
+	
+	public List<FieldDeclaration> getFields() {
+		return this.fields;
+	}
+	
 	/**
 	 * Constructor for a record type including fields.
 	 * @param _name Name of the record type.

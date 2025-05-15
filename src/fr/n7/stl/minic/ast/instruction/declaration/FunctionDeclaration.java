@@ -11,10 +11,12 @@ import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 
 /**
  * Abstract Syntax Tree node for a function declaration.
@@ -26,6 +28,9 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 * Name of the function
 	 */
 	protected String name;
+	
+	protected SymbolTable localTDS;
+
 
 	/**
 	 * AST node for the returned type of the function
@@ -99,13 +104,45 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in FunctionDeclaration.");
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		if (!scope.accepts(this)) {
+			Logger.error("Impossible de déclaré la fonction de nom : " + this.name + ", le nom à déjà été déclaré.");
+			return false;
+		}
+		scope.register(this);
+		this.localTDS =  new SymbolTable(scope);
+		for (ParameterDeclaration paramDecl : this.getParameters()) {
+			if (!localTDS.accepts(paramDecl)) {
+				Logger.error("Il y a 2 paramètres déclaré avec le nom " + paramDecl.getName() 
+					+ " dans la déclaration de la fontion " + this.getName());
+				return false;
+			}
+			localTDS.register(paramDecl);
+		}
+		boolean okBody = body.collectAndPartialResolve(scope, this);
+		boolean okType = type.completeResolve(scope);
+		return okBody && okType;
 	}
 
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		if (!scope.accepts(this)) {
+			Logger.error("Impossible de déclaré la fonction de nom : " + this.name + ", le nom à déjà été déclaré.");
+			return false;
+		}
+		scope.register(this);
+		this.localTDS =  new SymbolTable(scope);
+		for (ParameterDeclaration paramDecl : this.getParameters()) {
+			if (!localTDS.accepts(paramDecl)) {
+				Logger.error("Il y a 2 paramètres déclaré avec le nom " + paramDecl.getName() 
+					+ " dans la déclaration de la fontion " + this.getName());
+				return false;
+			}
+			localTDS.register(paramDecl);
+		}
+		boolean okBody = body.collectAndPartialResolve(scope, this);
+		boolean okType = type.completeResolve(scope);
+		return okBody && okType;
 
 	}
 
@@ -113,8 +150,10 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in FunctionDeclaration.");
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean okBody = body.completeResolve(this.localTDS);
+		boolean okType = type.completeResolve(scope);
+		return okBody && okType;
 	}
 
 	/* (non-Javadoc)
@@ -122,23 +161,45 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException( "Semantics checkType is undefined in FunctionDeclaration.");
+		return this.body.checkType();
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register, int)
 	 */
 	@Override
-	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException( "Semantics allocateMemory is undefined in FunctionDeclaration.");
-	}
+	public int allocateMemory(Register register, int offset) {
+		int off = 0;
+		for (ParameterDeclaration paramDecl : this.getParameters()) {
+			off += paramDecl.getType().length();
+		}
+		body.allocateMemory(register.LB, off);
+		for (ParameterDeclaration paramDecl : this.getParameters()) {
+			paramDecl.offset = off;
+			off -= paramDecl.getType().length();
+		}
+		return 0;
+		}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in FunctionDeclaration.");
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragFonDecl = factory.createFragment();
+		fragFonDecl.add(factory.createJump(this.getName()+ "end"));
+		fragFonDecl.addSuffix(this.getName()+ "start");
+		fragFonDecl.append(this.body.getCode(factory));
+		Fragment fragFonEnd = factory.createFragment();
+		int off = 0;
+		for (ParameterDeclaration paramDecl : this.getParameters()) {
+			off += paramDecl.getType().length();
+		}
+		fragFonEnd.add(factory.createReturn(type.length(), off));
+		fragFonEnd.addPrefix(name + "retour");
+		fragFonEnd.addSuffix(this.getName()+ "end");
+		fragFonDecl.append(fragFonEnd);
+		return fragFonDecl;
 	}
 
 }

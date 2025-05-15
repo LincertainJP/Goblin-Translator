@@ -41,19 +41,24 @@ public class Iteration implements Instruction {
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		boolean ok = this.condition.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		boolean ok = this.condition.collectAndPartialResolve(scope);
 		if (!ok) {
 			Logger.error("Erreur de Type: une condition doit être une variable booléenne.");
 			return false;
 		}
-		return this.body.collectAndPartialResolve(_scope);
+		return this.body.collectAndPartialResolve(scope);
 	}
 
 
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		return this.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		boolean ok = this.condition.collectAndPartialResolve(scope);
+		if (!ok) {
+			Logger.error("Erreur de Type: une condition doit être une variable booléenne.");
+			return false;
+		}
+		return this.body.collectAndPartialResolve(scope, container);
 	}
 
 	/* (non-Javadoc)

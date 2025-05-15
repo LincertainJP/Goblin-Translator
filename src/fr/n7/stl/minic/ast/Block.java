@@ -7,12 +7,14 @@ import java.util.List;
 
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
+import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 
 /**
  * Represents a Block node in the Abstract Syntax Tree node for the Bloc language.
@@ -62,10 +64,9 @@ public class Block {
 	 */
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		boolean ok = true;
-		SymbolTable symbTabBlock = new SymbolTable(scope);
-		this.localTDS = symbTabBlock;
+		this.localTDS =  new SymbolTable(scope);
 		for (Instruction istr: this.instructions) {
-			ok = ok && istr.collectAndPartialResolve(symbTabBlock);
+			ok = ok && istr.collectAndPartialResolve(this.localTDS);
 		}
 		return ok;
 	}
@@ -80,8 +81,13 @@ public class Block {
 	 * @return Synthesized Semantics attribute that indicates if the identifier declaration are
 	 * allowed.
 	 */
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		return this.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		boolean ok = true;
+		this.localTDS =  new SymbolTable(scope);
+		for (Instruction istr: this.instructions) {
+			ok = ok && istr.collectAndPartialResolve(this.localTDS, container);
+		}
+		return ok;
 	}
 
 	/**

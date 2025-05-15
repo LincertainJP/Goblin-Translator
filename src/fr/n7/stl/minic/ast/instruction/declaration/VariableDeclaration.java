@@ -118,8 +118,14 @@ public class VariableDeclaration implements Declaration, Instruction {
 	}
 
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		if (scope.accepts(this)) {
+			scope.register(this);
+			return this.value.collectAndPartialResolve(scope);
+		} else {
+			Logger.error("la variable :\"" + this.name + "\" est déjà déclarée.");
+			return false;
+		}
 	}
 
 	/* (non-Javadoc)

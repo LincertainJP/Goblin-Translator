@@ -1,0 +1,6 @@
+monProgramme {
+	int sub (int a, int b){
+		return (a - b);
+	}
+	print sub(2,1);
+}

@@ -59,12 +59,19 @@ public class Assignment implements Instruction, Expression {
 			return false;
 		}
 		return ok && (this.assignable.collectAndPartialResolve(scope) && this.value.collectAndPartialResolve(scope));
-
 	}
 
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		return this.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		Declaration decl = scope.get(this.assignable.toString());
+		boolean ok = true;
+		if (decl == null) {
+			ok = ok && this.assignable.collectAndPartialResolve(scope);
+		} else if (decl instanceof ConstantDeclaration) {
+			Logger.error ("Impossible d'assigner une nouvelle valeur à la constante :\"" + this.assignable.toString() + "\"");
+			return false;
+		}
+		return ok && (this.assignable.collectAndPartialResolve(scope) && this.value.collectAndPartialResolve(scope));
 	}
 
 	/* (non-Javadoc)

@@ -37,13 +37,13 @@ public class Printer implements Instruction {
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		return parameter.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		return parameter.collectAndPartialResolve(scope);
 	}
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
-		return this.collectAndPartialResolve(scope);
+		return parameter.collectAndPartialResolve(scope);
 	}
 
 	/* (non-Javadoc)

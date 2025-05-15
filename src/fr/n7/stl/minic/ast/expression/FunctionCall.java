@@ -13,7 +13,9 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 
 /**
  * Abstract Syntax Tree node for a function call expression.
@@ -69,32 +71,62 @@ public class FunctionCall implements AccessibleExpression {
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in FunctionCall.");
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		boolean ok = true;
+		if (scope.knows(name)) {
+			Declaration declConnue = scope.get(name);
+			if (declConnue instanceof FunctionDeclaration funDecl) {
+				this.function = funDecl;
+			} else {
+				Logger.error("Appel de fonction Impossible : la déclaration la plus récente de " + 
+						name + " n'est pas une fonction.");		
+				return false;
+			}
+		} else {
+			Logger.error("Appel de fonction Impossible : la fonction appellée ( " + 
+					name + " ) n'est pas déclarée.");		
+			return false;
+		}
+		for (AccessibleExpression expr : arguments) {
+			ok = ok && expr.collectAndPartialResolve(scope);
+		}
+		return ok;
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in FunctionCall.");
-	}
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean ok = true;
+		for (AccessibleExpression expr : arguments) {
+			ok = ok && expr.completeResolve(scope);
+		}
+		return ok;
+		}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException( "Semantics getType is undefined in FunctionCall.");
+		return this.function.getType();
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in FunctionCall.");
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragFonCall = factory.createFragment();
+		int off = 0;
+		for (AccessibleExpression paramExpr : arguments) {
+			off+= paramExpr.getType().length();
+			fragFonCall.append(paramExpr.getCode(factory));
+			fragFonCall.add(factory.createLoad(Register.LB, off, paramExpr.getType().length()));
+		}
+		fragFonCall.add(factory.createCall(function.getName() + "start", Register.LB));
+		return fragFonCall;
 	}
 
 }
