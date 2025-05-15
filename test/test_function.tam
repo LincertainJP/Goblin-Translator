@@ -1,11 +1,18 @@
-JUMP deuxend
-deuxstart
-LOADL 13
-JUMP deuxretour
-deuxretour
-RETURN (1) 0
-deuxend
-CALL (LB) deuxstart
+JUMP subend
+substart
+;(a - b)
+LOADA 2[LB]
+LOADA 1[LB]
+SUBR ISub
+JUMP subretour
+subretour
+RETURN (1) 2
+subend
+LOADL 2
+LOAD (1) 1[LB]
+LOADL 1
+LOAD (1) 2[LB]
+CALL (LB) substart
 SUBR IOut
 HALT
 

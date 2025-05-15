@@ -119,9 +119,8 @@ public class FunctionDeclaration implements Instruction, Declaration {
 			}
 			localTDS.register(paramDecl);
 		}
-		boolean okBody = body.collectAndPartialResolve(scope, this);
-		boolean okType = type.completeResolve(scope);
-		return okBody && okType;
+		boolean okBody = body.collectAndPartialResolve(localTDS, this);
+		return okBody;
 	}
 
 	@Override
