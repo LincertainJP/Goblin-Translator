@@ -62,7 +62,7 @@ public class PointerType implements Type {
 		if (otherType instanceof PointerType ptrT) {
 			return new PointerType(this.element.merge(ptrT.getPointedType()));
 		}
-		throw new TypeErrorException("tentative de merge le type " + other.toString() + " et un PointerType, opération impossible");
+		return AtomicType.NullType;
 	}
 
 	/* (non-Javadoc)
